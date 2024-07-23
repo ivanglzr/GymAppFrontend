@@ -1,0 +1,45 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue";
+}
+
+body {
+  min-height: 100vh;
+  color: #fff;
+}
+
+form {
+  background: #a875bd;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  height: 500px;
+  width: 300px;
+
+  border-radius: 24px;
+  padding: 20px;
+
+  text-align: center;
+
+  & > input {
+    padding: 10px;
+    border-radius: 24px;
+    border: none;
+
+    &::before {
+      content: "Name";
+      color: #000;
+
+      width: 200px;
+
+      position: absolute;
+      font-size: 300px;
+    }
+  }
+}
