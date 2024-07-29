@@ -13,11 +13,3 @@
 .fa-solid {
   color: #fff;
 }
-
-body {
-  min-height: 100vh;
-
-  display: grid;
-  grid-template-columns: 5% 1fr;
-  grid-template-rows: 1fr;
-}

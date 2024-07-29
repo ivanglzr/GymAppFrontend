@@ -8,8 +8,35 @@
   </head>
   <body>
     <form method="post">
-      <h2>Log in</h2>
-      <input type="text" name="name" id="name" />
+      <h1>Log in</h1>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+      </div>
+      <div class="numeric-data">
+        <div class="numeric-data-group">
+          <label for="age">Age</label>
+          <input type="number" name="age" id="age" />
+        </div>
+        <div class="numeric-data-group">
+          <label for="weight">Weight</label>
+          <input type="number" name="weight" id="weight" />
+        </div>
+        <div class="numeric-data-group">
+          <label for="height">Height</label>
+          <input type="number" name="height" id="height" />
+        </div>
+      </div>
+
+      <button type="submit">Submit</button>
     </form>
 
     <script
