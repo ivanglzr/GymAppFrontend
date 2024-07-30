@@ -4,44 +4,58 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
+      integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
+      crossorigin="anonymous"
+    ></script>
+
     <title>GymApp</title>
   </head>
   <body>
-    <form method="post">
-      <h1>Log in</h1>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name" />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" />
-      </div>
-      <div class="numeric-data">
-        <div class="numeric-data-group">
-          <label for="age">Age</label>
-          <input type="number" name="age" id="age" />
+    <aside id="aside">
+      <nav className="aside-nav">
+        <a href="#">
+          <i className="fa-solid fa-house fa-2xl"></i>
+        </a>
+        <a href="#">
+          <i className="fa-solid fa-clipboard-list fa-2xl"></i>
+        </a>
+        <a href="#">
+          <i className="fa-solid fa-dumbbell fa-2xl"></i>
+        </a>
+        <a href="#">
+          <i className="fa-solid fa-user fa-2xl"></i>
+        </a>
+        <a href="#">
+          <i className="fa-solid fa-gear fa-2xl"></i>
+        </a>
+      </nav>
+    </aside>
+    <main id="main">
+      <h1>Home</h1>
+      <section class="trainings-section">
+        <div class="training-div">
+          <h2 class="training-title">Training</h2>
+          <div class="training-info">
+            <div class="duration-div">
+              <span class="duration-div-title subtitle">Duration</span>
+              <span class="duration-div-info">1h</span>
+            </div>
+            <div class="sets-div">
+              <span class="sets-div-title subtitle">Sets</span>
+              <span class="sets-div-info">24</span>
+            </div>
+          </div>
+          <div class="exercises-div">
+            <h3 class="exercises-title subtitle">Workout</h3>
+            <ul class="exercises-list">
+              <li class="exercise-name">Exercise</li>
+            </ul>
+          </div>
         </div>
-        <div class="numeric-data-group">
-          <label for="weight">Weight</label>
-          <input type="number" name="weight" id="weight" />
-        </div>
-        <div class="numeric-data-group">
-          <label for="height">Height</label>
-          <input type="number" name="height" id="height" />
-        </div>
-      </div>
-
-      <button type="submit">Submit</button>
-    </form>
-
-    <script
-      src="https://kit.fontawesome.com/c7812e7e0b.js"
-      crossorigin="anonymous"
-    ></script>
+      </section>
+    </main>
   </body>
 </html>

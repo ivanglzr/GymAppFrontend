@@ -1,6 +1,6 @@
-import { SignInInterface } from "@/index";
+import { SignInInterface, LogInInterface } from "@/index";
 
-export function validateForm({
+export function validateSignInForm({
   name,
   email,
   password,
@@ -30,5 +30,23 @@ export function validateForm({
 
   if (age < 12) {
     throw new Error("You're too young");
+  }
+}
+
+export function validateLogInForm({ email, password }: LogInInterface) {
+  if (!email || !password) {
+    throw new Error("There is data missing");
+  }
+
+  if (
+    email.length < 5 ||
+    email.indexOf("@") === -1 ||
+    email.indexOf(".") === -1
+  ) {
+    throw new Error("Email isn't valid");
+  }
+
+  if (password.length < 8) {
+    throw new Error("Password is too short");
   }
 }

@@ -7,6 +7,11 @@ export interface SignInInterface {
   height: number;
 }
 
+export interface LogInInterface {
+  email: string;
+  password: string;
+}
+
 export interface Exercise {
   name: string;
   sets: Array<{

@@ -1,5 +1,7 @@
 import "@/css/index.css";
 
+import { poppins } from "@/css/fonts";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -15,7 +17,7 @@ export default function RootLayout({
         ></script>
         <title>GymApp</title>
       </head>
-      <body>{children}</body>
+      <body className={poppins.className}>{children}</body>
     </html>
   );
 }

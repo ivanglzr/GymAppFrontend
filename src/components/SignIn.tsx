@@ -4,9 +4,9 @@ import React from "react";
 
 import Swal from "sweetalert2";
 
-import "@/css/SignIn.css";
+import "@/css/Forms.css";
 
-import { validateForm } from "@/utils/validateForm";
+import { validateSignInForm } from "@/utils/validateForm";
 
 import { SignInInterface, User } from "../index";
 
@@ -28,7 +28,7 @@ export default function SignIn() {
     };
 
     try {
-      validateForm(formDataTyped);
+      validateSignInForm(formDataTyped);
 
       const user: User = {
         ...formDataTyped,

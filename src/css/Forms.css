@@ -8,10 +8,18 @@ input[type="number"] {
   appearance: textfield;
 }
 
+input:focus {
+  outline: none;
+
+  box-shadow: inset 0 0 7px #000;
+
+  transition: 0.1s box-shadow linear;
+}
+
 body {
   overflow: hidden;
 
-  background: #242424;
+  background: var(--fourth-color);
 
   min-height: 100vh;
 
@@ -19,7 +27,7 @@ body {
 }
 
 form {
-  background: #696969;
+  background: var(--second-color);
 
   padding: 20px;
 
@@ -56,7 +64,7 @@ form {
       padding: 7px 14px;
 
       border-radius: 24px;
-      border: 2px solid #000;
+      border: none;
 
       font-size: 25px;
     }
@@ -71,6 +79,7 @@ form {
     & > .numeric-data-group {
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 10px;
 
       & > label {
@@ -78,11 +87,11 @@ form {
       }
 
       & > input {
-        width: 50px;
+        width: 60px;
         height: 70px;
 
         border-radius: 8px;
-        border: 2px solid #000;
+        border: none;
 
         font-size: 30px;
 
@@ -92,7 +101,7 @@ form {
   }
 
   & > button {
-    background: #4150d9;
+    background: var(--first-color);
 
     width: 70%;
     height: 50px;
@@ -103,14 +112,14 @@ form {
     border: none;
 
     font-size: 25px;
-    color: #fff;
+    color: var(--fourth-color);
 
     transition: background 0.2s linear;
 
     cursor: pointer;
 
     &:hover {
-      background: #28ff2c;
+      background: #238d24;
     }
   }
 }
