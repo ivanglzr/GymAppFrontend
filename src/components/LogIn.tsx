@@ -40,7 +40,7 @@ export default function LogIn() {
 
       Swal.fire("Success", res.message, "success");
 
-      router.push("/user/123");
+      router.push("/user/");
     } catch (err) {
       Swal.fire("Error", `${err}`, "error");
     }

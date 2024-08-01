@@ -10,11 +10,6 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <script
-          src="https://kit.fontawesome.com/c7812e7e0b.js"
-          crossOrigin="anonymous"
-          defer
-        ></script>
         <title>GymApp</title>
       </head>
       <body className={poppins.className}>{children}</body>

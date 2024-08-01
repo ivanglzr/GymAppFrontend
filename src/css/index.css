@@ -1,12 +1,29 @@
 :root {
-  --first-color: #021526;
-  --second-color: #03346e;
-  --third-color: #6eacda;
-  --fourth-color: #e2e2b6;
+  --first-color: #313131;
+  --second-color: #292929;
+  --third-color: #4257de;
+  --border-radius: 20px;
+  --font-color: #ffffff;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.fa-solid {
+  color: var(--font-color);
+}
+
+.subtitle {
+  opacity: 0.6;
+}
+
+body {
+  background: var(--first-color);
+
+  min-height: 100vh;
+
+  color: var(--font-color);
 }

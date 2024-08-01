@@ -12,7 +12,11 @@ import { SignInInterface, User } from "../index";
 
 import { postUser } from "@/services/user";
 
+import { useRouter } from "next/navigation";
+
 export default function SignIn() {
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -42,8 +46,10 @@ export default function SignIn() {
       }
 
       Swal.fire("Success", "You signed in correctly", "success");
+
+      router.push("/login");
     } catch (err) {
-      Swal.fire("Error", err as string, "error");
+      Swal.fire("Error", `${err}`, "error");
     }
   };
 

@@ -1,12 +1,16 @@
+"use client";
+
 import "@/css/Aside.css";
+
+import Link from "next/link";
 
 export default function Aside() {
   return (
-    <aside id="aside">
+    <aside id="navigation-aside">
       <nav className="aside-nav">
-        <a href="#">
+        <Link href="/user">
           <i className="fa-solid fa-house fa-2xl"></i>
-        </a>
+        </Link>
         <a href="#">
           <i className="fa-solid fa-clipboard-list fa-2xl"></i>
         </a>

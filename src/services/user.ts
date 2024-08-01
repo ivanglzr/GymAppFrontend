@@ -1,14 +1,6 @@
 import { User } from "../index";
 
-const ROUTES = {
-  URI: "http://localhost:3900",
-  LOGIN: "/login/",
-  GET_USER_BY_TOKEN: "/user/",
-  GET_USER_BY_ID: (id: string) => {
-    return `/user/${id}/`;
-  },
-  POST_USER: "/user/",
-};
+import { ROUTES } from "./constants";
 
 export async function login(email: string, password: string) {
   const petition = await fetch(ROUTES.URI + ROUTES.LOGIN, {
@@ -24,13 +16,21 @@ export async function login(email: string, password: string) {
   return res;
 }
 
-export async function getUserByToken() {
-  const petition = await fetch(ROUTES.URI + ROUTES.GET_USER_BY_TOKEN, {
-    method: "GET",
-    cache: "no-store",
+export async function logout() {
+  const petition = await fetch(ROUTES.URI + ROUTES.LOGOUT, {
+    method: "POST",
     credentials: "include",
   });
+  const res = await petition.json();
 
+  return res;
+}
+
+export async function getUser() {
+  const petition = await fetch(ROUTES.URI + ROUTES.GET_USER_BY_TOKEN, {
+    method: "GET",
+    credentials: "include",
+  });
   const res = await petition.json();
 
   return res;
@@ -42,7 +42,7 @@ export async function postUser(user: User) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ user: user }),
+    body: JSON.stringify({ user }),
   });
 
   const res = await petition.json();

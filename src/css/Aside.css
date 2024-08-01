@@ -1,5 +1,4 @@
-#aside {
-  width: 7%;
+#navigation-aside {
   height: 100%;
 
   background: var(--second-color);
@@ -15,10 +14,6 @@
 
     & > a {
       margin: 20px auto;
-
-      & > i {
-        color: #fff;
-      }
 
       &:hover > i {
         opacity: 0.7;
