@@ -2,6 +2,17 @@ import { ROUTES } from "./constants";
 
 import { Training } from "..";
 
+export async function getTraining(trainingId: string) {
+  const petition = await fetch(ROUTES.URI + ROUTES.GET_TRAINING(trainingId), {
+    method: "GET",
+    credentials: "include",
+    cache: "no-store",
+  });
+  const res = await petition.json();
+
+  return res;
+}
+
 export async function putTraining(trainingId: string, training: Training) {
   const petition = await fetch(ROUTES.URI + ROUTES.PUT_TRAINING(trainingId), {
     method: "PUT",

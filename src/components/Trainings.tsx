@@ -22,6 +22,8 @@ export default function Trainings({
       <h1>Home</h1>
       <section className="trainings-section">
         {trainings.map(({ _id, date, duration, exercises }) => {
+          console.log(date);
+
           const parsedDate = date.toLocaleDateString("es-ES", {
             year: "numeric",
             month: "short",
@@ -40,7 +42,7 @@ export default function Trainings({
             } else {
               setTrainings((prevState: TrainingInterface[]) => {
                 const newState = prevState.filter(
-                  (e) => e._id?.toString() !== _id
+                  e => e._id?.toString() !== _id
                 );
 
                 return newState;
@@ -53,6 +55,7 @@ export default function Trainings({
           return (
             <Training
               key={_id}
+              id={`${_id}`}
               date={parsedDate}
               duration={duration}
               exercises={exercises}

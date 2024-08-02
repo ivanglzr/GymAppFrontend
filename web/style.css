@@ -4,6 +4,7 @@
   --first-color: #313131;
   --second-color: #292929;
   --third-color: #4257de;
+  --font-color: #fff;
   --border-radius: 20px;
 }
 
@@ -16,7 +17,7 @@
 }
 
 .fa-solid {
-  color: #fff;
+  color: var(--font-color);
 }
 
 .subtitle {
@@ -28,7 +29,7 @@ body {
 
   min-height: 100vh;
 
-  color: #fff;
+  color: var(--font-color);
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -47,6 +48,17 @@ input:focus {
   box-shadow: inset 0 0 7px #000;
 
   transition: 0.1s box-shadow linear;
+}
+
+.btn-add {
+  background: none;
+
+  width: 50%;
+
+  text-align: left;
+  color: var(--font-color);
+
+  border: none;
 }
 
 form {
@@ -140,9 +152,18 @@ form {
         }
       }
     }
+
+    & > .btn-add-set {
+      margin-top: 10px;
+      font-size: 20px;
+    }
   }
 
-  & > button {
+  & > #btn-add-exercise {
+    font-size: 25px;
+  }
+
+  & > #btn-submit {
     background: var(--third-color);
 
     width: 70%;

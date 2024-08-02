@@ -23,7 +23,7 @@
 body {
   background: var(--first-color);
 
-  min-height: 100vh;
+  min-height: 100%;
 
   color: var(--font-color);
 }

@@ -16,7 +16,7 @@ let training = {
   ],
 };
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", e => {
   e.preventDefault();
 
   const data = Object.fromEntries(new FormData(e.target));
@@ -60,4 +60,44 @@ form.addEventListener("submit", (e) => {
   }
 
   console.log(exercises);
+});
+
+const btnAddExercise = document.querySelector("#btn-add-exercise");
+
+btnAddExercise.addEventListener("click", () => {
+  const div = document.createElement("div");
+  div.classList.add("form-group");
+  div.innerHTML = `
+        <label for="3">Exercise 3</label>
+        <input type="text" name="3" id="3" value="Push ups" />
+
+        <div class="sets-form-group">
+          <h3>Set 1</h3>
+          <div class="set-divs-container">
+            <div class="sets-form-group-div">
+              <label for="3-1-w">Weight</label>
+              <input type="number" name="3-1-w" id="3-1-w" value="0" />
+            </div>
+            <div class="sets-form-group-div">
+              <label for="3-1-r">Reps</label>
+              <input type="number" name="3-1-r" id="3-1-r" value="12" />
+            </div>
+          </div>
+        </div>
+        <div class="sets-form-group">
+          <h3>Set 2</h3>
+          <div class="set-divs-container">
+            <div class="sets-form-group-div">
+              <label for="3-2-w">Weight</label>
+              <input type="number" name="3-2-w" id="3-2-w" value="0" />
+            </div>
+            <div class="sets-form-group-div">
+              <label for="3-2-r">Reps</label>
+              <input type="number" name="3-2-r" id="3-2-r" value="12" />
+            </div>
+          </div>
+        </div>
+  `;
+
+  form.appendChild(div);
 });

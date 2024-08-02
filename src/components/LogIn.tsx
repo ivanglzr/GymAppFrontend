@@ -58,7 +58,9 @@ export default function LogIn() {
         <input type="password" name="password" id="password" />
       </div>
 
-      <button type="submit">Submit</button>
+      <button type="submit" id="btn-submit">
+        Submit
+      </button>
     </form>
   );
 }

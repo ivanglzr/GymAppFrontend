@@ -27,7 +27,7 @@ export async function logout() {
 }
 
 export async function getUser() {
-  const petition = await fetch(ROUTES.URI + ROUTES.GET_USER_BY_TOKEN, {
+  const petition = await fetch(ROUTES.URI + ROUTES.GET_USER, {
     method: "GET",
     credentials: "include",
   });

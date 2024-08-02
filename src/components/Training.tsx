@@ -1,25 +1,36 @@
+"use client";
+
 import { Exercise } from "..";
 
+import { useRouter } from "next/navigation";
+
 export default function Training({
+  id,
   date,
   duration,
   exercises,
   sets,
   handleDelete,
 }: {
+  id: string;
   date: string;
   duration: number;
   exercises: Array<Exercise>;
   sets: number;
   handleDelete: () => Promise<void>;
 }) {
+  const router = useRouter();
+
   return (
     <div className="training-div">
       <header className="training-header">
         <h2 className="training-title">Training</h2>
         <span className="training-date subtitle">{date}</span>
         <div className="training-icons-div">
-          <button className="btn-icon">
+          <button
+            className="btn-icon"
+            onClick={() => router.push(`/user/training/edit/${id}`)}
+          >
             <i className="fa-solid fa-pen-to-square fa-xl"></i>
           </button>
           <button className="btn-icon" onClick={handleDelete}>
@@ -40,7 +51,7 @@ export default function Training({
       <div className="exercises-div">
         <h3 className="exercises-title subtitle">Workout</h3>
         <ul className="exercises-list">
-          {exercises.map((exercise) => (
+          {exercises.map(exercise => (
             <li className="exercise-name" key={exercise._id}>
               {exercise.sets.length} sets {exercise.name}
             </li>
