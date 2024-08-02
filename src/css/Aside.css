@@ -1,9 +1,13 @@
 #navigation-aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+
   height: 100%;
 
   background: var(--second-color);
 
-  padding: 20px 5px;
+  padding: 20px 10px;
 
   text-align: center;
 

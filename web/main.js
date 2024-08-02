@@ -58,8 +58,6 @@ form.addEventListener("submit", e => {
 
     exercises.push(exercise);
   }
-
-  console.log(exercises);
 });
 
 const btnAddExercise = document.querySelector("#btn-add-exercise");

@@ -32,8 +32,6 @@ export default function LogIn() {
 
       const res = await login(formDataTyped.email, formDataTyped.password);
 
-      console.log(res);
-
       if (res.status === "error") {
         return Swal.fire("Error", `${res.message}`, "error");
       }

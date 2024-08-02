@@ -96,19 +96,6 @@ form {
         border: none;
 
         cursor: pointer;
-
-        & > i {
-          margin-left: auto;
-
-          font-size: 20px;
-
-          &:hover {
-            color: #ff0000;
-            opacity: 0.8;
-
-            transition: all 0.2s linear;
-          }
-        }
       }
 
       & > .set-divs-container {

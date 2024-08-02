@@ -22,8 +22,6 @@ export default function Trainings({
       <h1>Home</h1>
       <section className="trainings-section">
         {trainings.map(({ _id, date, duration, exercises }) => {
-          console.log(date);
-
           const parsedDate = date.toLocaleDateString("es-ES", {
             year: "numeric",
             month: "short",

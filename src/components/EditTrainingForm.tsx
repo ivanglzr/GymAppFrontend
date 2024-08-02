@@ -1,6 +1,8 @@
+"use client";
+
 import "@/css/Forms.css";
 
-import { Exercise, Training } from "../index";
+import { Training } from "../index";
 import { Dispatch, SetStateAction } from "react";
 
 import Swal from "sweetalert2";
@@ -8,6 +10,8 @@ import Swal from "sweetalert2";
 import { validateEditTrainingForm } from "@/utils/validateForm";
 
 import { putTraining } from "@/services/training";
+import { getFormData } from "@/utils/getFormData";
+import { useRouter } from "next/navigation";
 
 export default function EditTrainingForm({
   trainingId,
@@ -18,6 +22,8 @@ export default function EditTrainingForm({
   training: Training;
   setTraining: Dispatch<SetStateAction<Training>>;
 }) {
+  const router = useRouter();
+
   const year = training.date.getFullYear();
   const month = String(training.date.getMonth() + 1).padStart(2, "0");
   const day = String(training.date.getDate()).padStart(2, "0");
@@ -27,51 +33,7 @@ export default function EditTrainingForm({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const data = Object.fromEntries(new FormData(event.currentTarget));
-
-    const parsedDate = new Date(data.date as string);
-
-    let training: Training = {
-      date: new Date(parsedDate),
-      duration: Number(data.duration as string),
-      exercises: [],
-    };
-
-    let numOfExercises = 0;
-
-    for (const key of Object.keys(data)) {
-      if (key.length === 1) {
-        numOfExercises++;
-      }
-    }
-
-    for (
-      let exerciseIndex = 1;
-      exerciseIndex <= numOfExercises;
-      exerciseIndex++
-    ) {
-      let exercise: Exercise = {
-        name: data[`${exerciseIndex}`] as string,
-        sets: [],
-      };
-
-      let numOfSets = 0;
-
-      for (const key of Object.keys(data)) {
-        if (key.startsWith(`${exerciseIndex}`) && key.length !== 1) {
-          numOfSets += 0.5;
-        }
-      }
-
-      for (let setIndex = 1; setIndex <= numOfSets; setIndex++) {
-        exercise.sets.push({
-          weight: Number(data[`${exerciseIndex}-${setIndex}-w`] as string),
-          reps: Number(data[`${exerciseIndex}-${setIndex}-r`] as string),
-        });
-      }
-
-      training.exercises.push(exercise);
-    }
+    const training = getFormData(event.currentTarget);
 
     try {
       validateEditTrainingForm(training);
@@ -82,6 +44,8 @@ export default function EditTrainingForm({
         return Swal.fire("Error", res.message, "error");
 
       Swal.fire("Success", res.message, "success");
+
+      router.push("/user");
     } catch (err) {
       Swal.fire("Error", `${err}`, "error");
     }
@@ -138,6 +102,23 @@ export default function EditTrainingForm({
     });
   };
 
+  const deleteExercise = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
+    exerciseIndex: number
+  ) => {
+    event.preventDefault();
+
+    setTraining(prevState => {
+      const newExercises = [...prevState.exercises];
+      newExercises.splice(exerciseIndex, 1);
+
+      return {
+        ...prevState,
+        exercises: newExercises,
+      };
+    });
+  };
+
   const deleteSet = (
     event: React.MouseEvent<HTMLButtonElement>,
     exerciseIndex: number,
@@ -149,8 +130,6 @@ export default function EditTrainingForm({
       const newExercises = prevState.exercises.map((exercise, index) => {
         if (index === exerciseIndex) {
           const newSets = exercise.sets.filter((_, i) => i !== setIndex);
-
-          console.log(newSets);
 
           return {
             ...exercise,
@@ -188,9 +167,13 @@ export default function EditTrainingForm({
         exerciseIndex++;
 
         return (
-          <div className="form-group" key={exerciseIndex}>
+          <div className="form-group" key={exercise._id}>
             <label htmlFor={exerciseIndex.toString()}>
-              Exercise {exerciseIndex}
+              Exercise {exerciseIndex}{" "}
+              <i
+                className="fa-solid fa-trash"
+                onClick={event => deleteExercise(event, exerciseIndex - 1)}
+              ></i>
             </label>
             <input
               type="text"
@@ -205,7 +188,7 @@ export default function EditTrainingForm({
               return (
                 <div
                   className="sets-form-group"
-                  key={`${exerciseIndex}-${setIndex}`}
+                  key={`${set._id}-${exerciseIndex}-${setIndex}`}
                 >
                   <h3>
                     Set {setIndex}{" "}

@@ -16,6 +16,19 @@
   color: var(--font-color);
 }
 
+.fa-trash {
+  margin-left: auto;
+
+  font-size: 20px;
+
+  &:hover {
+    color: #ff0000;
+    opacity: 0.8;
+
+    transition: all 0.2s linear;
+  }
+}
+
 .subtitle {
   opacity: 0.6;
 }

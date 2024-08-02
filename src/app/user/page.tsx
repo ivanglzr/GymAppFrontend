@@ -25,7 +25,7 @@ export default function UserPage() {
 
         setTrainings(trainingsParsed);
       })
-      .catch((_) => setError(true));
+      .catch(_ => setError(true));
   }, []);
 
   return (
@@ -33,7 +33,8 @@ export default function UserPage() {
       style={{
         minHeight: "100vh",
         display: "grid",
-        gridTemplateColumns: "5% 75% 20%",
+        gridTemplateColumns: "75% 20%",
+        paddingLeft: "5%",
       }}
     >
       {!error && (
