@@ -1,28 +1,39 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { Training } from "@/index";
+import { Training, User } from "@/index";
 
 import { getUser } from "@/services/user";
 
 import Aside from "@/components/Aside";
 import Trainings from "@/components/Trainings";
+import UserAside from "@/components/UserAside";
 
 export default function UserPage() {
+  const [user, setUser] = useState<User | undefined>(undefined);
   const [trainings, setTrainings] = useState<Training[]>([]);
   const [error, setError] = useState(false);
+  const totalTrainingsDuration = useRef(0);
 
   useEffect(() => {
     getUser()
-      .then(({ user: { trainings } }) => {
-        const trainingsParsed = trainings.map((training: Training) => {
+      .then(({ user }) => {
+        const trainingsParsed = user.trainings.map((training: Training) => {
           return {
             ...training,
             date: new Date(training.date),
           };
         });
 
+        totalTrainingsDuration.current = user.trainings.reduce(
+          (totalDuration: number, training: Training) => {
+            return totalDuration + training.duration;
+          },
+          0
+        );
+
+        setUser(user);
         setTrainings(trainingsParsed);
       })
       .catch(_ => setError(true));
@@ -33,7 +44,7 @@ export default function UserPage() {
       style={{
         minHeight: "100vh",
         display: "grid",
-        gridTemplateColumns: "75% 20%",
+        gridTemplateColumns: "80% 16%",
         paddingLeft: "5%",
       }}
     >
@@ -41,6 +52,13 @@ export default function UserPage() {
         <>
           <Aside />
           <Trainings setTrainings={setTrainings} trainings={trainings} />
+          {user && (
+            <UserAside
+              name={user.name}
+              numberOfTrainings={trainings.length}
+              totalTrainingsDuration={totalTrainingsDuration.current}
+            />
+          )}
         </>
       )}
       {error && <h2>Fetching trainings failed</h2>}

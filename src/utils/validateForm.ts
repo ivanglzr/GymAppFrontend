@@ -51,7 +51,7 @@ export function validateLogInForm({ email, password }: LogInInterface) {
   }
 }
 
-export function validateEditTrainingForm(training: Training) {
+export function validateTrainingForm(training: Training) {
   // Validar la fecha
   if (!(training.date instanceof Date) || isNaN(training.date.getTime())) {
     throw new Error("La fecha es inválida.");

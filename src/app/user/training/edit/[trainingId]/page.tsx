@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 import { Training } from "@/index";
 
-import EditTrainingForm from "@/components/EditTrainingForm";
+import TrainingForm from "@/components/TrainingForm";
 
 import { useState, useEffect } from "react";
 
@@ -35,9 +35,7 @@ export default function EditTrainingPage({
 
         setTraining(parsedTraining);
       })
-      .catch(err => {
-        console.error(err);
-
+      .catch(_ => {
         setError(true);
       });
   }, [trainingId]);
@@ -45,13 +43,7 @@ export default function EditTrainingPage({
   return (
     <>
       {!error && training && (
-        <EditTrainingForm
-          trainingId={trainingId}
-          training={training}
-          setTraining={
-            setTraining as React.Dispatch<React.SetStateAction<Training>>
-          }
-        />
+        <TrainingForm isEditTraining={true} training={training} />
       )}
       {error && <h2>Couldn&apos;t get training</h2>}
     </>

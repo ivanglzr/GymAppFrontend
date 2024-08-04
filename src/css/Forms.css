@@ -49,26 +49,24 @@ form {
 
   border-radius: 24px;
 
-  & > h1 {
+  & h1 {
     font-size: 40px;
   }
 
-  & > .form-group-duration {
-    & > input {
-      width: 60px;
-      height: 50px;
+  & .form-group-duration input {
+    width: 60px;
+    height: 50px;
 
-      margin-left: 10px;
+    margin-left: 10px;
 
-      border-radius: 6px;
-      border: none;
+    border-radius: 6px;
+    border: var(--input-border);
 
-      font-size: 25px;
-      text-align: center;
-    }
+    font-size: 25px;
+    text-align: center;
   }
 
-  & > .form-group {
+  & .form-group {
     display: flex;
     flex-direction: column;
 
@@ -76,14 +74,21 @@ form {
 
     margin: 10px 0;
 
-    & > input[type="text"],
-    & > input[type="date"],
-    & > input[type="email"],
-    & > input[type="password"] {
+    & label button {
+      background: none;
+      border: none;
+
+      cursor: pointer;
+    }
+
+    & input[type="text"],
+    & input[type="date"],
+    & input[type="email"],
+    & input[type="password"] {
       padding: 7px 14px;
 
       border-radius: 24px;
-      border: none;
+      border: var(--input-border);
 
       font-size: 25px;
     }
@@ -91,29 +96,29 @@ form {
     & .sets-form-group {
       margin-top: 20px;
 
-      & > h3 > button {
+      & h3 button {
         background: none;
         border: none;
 
         cursor: pointer;
       }
 
-      & > .set-divs-container {
+      & .set-divs-container {
         display: flex;
 
         justify-content: space-between;
 
-        & > .sets-form-group-div {
+        & .sets-form-group-div {
           width: 50%;
 
-          & > input {
+          & input {
             width: 60px;
             height: 50px;
 
             margin-left: 10px;
 
             border-radius: 6px;
-            border: none;
+            border: var(--input-border);
 
             font-size: 25px;
             text-align: center;
@@ -128,25 +133,25 @@ form {
       }
     }
 
-    & > .btn-add-set {
+    & .btn-add-set {
       margin-top: 10px;
       font-size: 20px;
     }
   }
 
-  & > .numeric-data {
+  & .numeric-data {
     display: flex;
     justify-content: space-around;
 
     padding: 20px;
 
-    & > .numeric-data-group {
+    & .numeric-data-group {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
 
-      & > input {
+      & input {
         width: 60px;
         height: 70px;
 
@@ -160,11 +165,11 @@ form {
     }
   }
 
-  & > #btn-add-exercise {
+  & #btn-add-exercise {
     font-size: 25px;
   }
 
-  & > #btn-submit {
+  & #btn-submit {
     background: var(--third-color);
 
     width: 70%;
@@ -185,5 +190,17 @@ form {
     &:hover {
       background: #238d24;
     }
+  }
+}
+
+@media (width <= 1150px) {
+  form {
+    width: 50%;
+  }
+}
+
+@media (width <= 700px) {
+  form {
+    width: 70%;
   }
 }

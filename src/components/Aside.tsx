@@ -2,27 +2,63 @@
 
 import "@/css/Aside.css";
 
+import Swal from "sweetalert2";
+
+import { useState } from "react";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import { logout } from "@/services/user";
 
 export default function Aside() {
+  const router = useRouter();
+
+  const [toggleThemeIconClass, setToggleThemeIconClass] =
+    useState<string>("fa-moon");
+
+  const changeTheme = () => {
+    document.body.classList.toggle("light");
+
+    if (toggleThemeIconClass === "fa-sun") {
+      setToggleThemeIconClass("fa-moon");
+    } else {
+      setToggleThemeIconClass("fa-sun");
+    }
+  };
+
+  const logoutUser = async () => {
+    const res = await logout();
+
+    if (res.status === "error") {
+      return Swal.fire("Error", res.message, "error");
+    }
+
+    Swal.fire("Success", res.message, "success");
+    router.push("/login");
+  };
+
   return (
     <aside id="navigation-aside">
       <nav className="aside-nav">
         <Link href="/user">
           <i className="fa-solid fa-house fa-2xl"></i>
         </Link>
-        <a href="#">
+        <Link href="/user/training/create">
           <i className="fa-solid fa-clipboard-list fa-2xl"></i>
-        </a>
-        <a href="#">
+        </Link>
+        <Link href="/exercise">
           <i className="fa-solid fa-dumbbell fa-2xl"></i>
-        </a>
-        <a href="#">
-          <i className="fa-solid fa-user fa-2xl"></i>
-        </a>
-        <a href="#">
+        </Link>
+        <Link href="/user/settings">
           <i className="fa-solid fa-gear fa-2xl"></i>
-        </a>
+        </Link>
+        <button className="logout-btn" onClick={logoutUser}>
+          <i className="fa-solid fa-right-from-bracket fa-2xl"></i>
+        </button>
+        <button className="toggle-theme-btn" onClick={changeTheme}>
+          <i className={`fa-solid ${toggleThemeIconClass} fa-2xl`}></i>
+        </button>
       </nav>
     </aside>
   );

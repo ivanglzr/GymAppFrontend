@@ -13,6 +13,20 @@ export async function getTraining(trainingId: string) {
   return res;
 }
 
+export async function postTraining(training: Training) {
+  const petition = await fetch(ROUTES.URI + ROUTES.POST_TRAINING, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(training),
+  });
+  const res = await petition.json();
+
+  return res;
+}
+
 export async function putTraining(trainingId: string, training: Training) {
   const petition = await fetch(ROUTES.URI + ROUTES.PUT_TRAINING(trainingId), {
     method: "PUT",

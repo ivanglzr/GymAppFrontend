@@ -13,6 +13,7 @@ import { LogInInterface } from "..";
 import { validateLogInForm } from "@/utils/validateForm";
 
 import { login } from "@/services/user";
+import Link from "next/link";
 
 export default function LogIn() {
   const router = useRouter();
@@ -59,6 +60,8 @@ export default function LogIn() {
       <button type="submit" id="btn-submit">
         Submit
       </button>
+
+      <Link href="/signin">Dont have an account?</Link>
     </form>
   );
 }

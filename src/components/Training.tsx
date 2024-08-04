@@ -22,7 +22,7 @@ export default function Training({
   const router = useRouter();
 
   return (
-    <div className="training-div">
+    <article className="training-div">
       <header className="training-header">
         <h2 className="training-title">Training</h2>
         <span className="training-date subtitle">{date}</span>
@@ -53,11 +53,12 @@ export default function Training({
         <ul className="exercises-list">
           {exercises.map(exercise => (
             <li className="exercise-name" key={exercise._id}>
-              {exercise.sets.length} sets {exercise.name}
+              {exercise.sets.length}{" "}
+              {exercise.sets.length === 1 ? "set" : "sets"} {exercise.name}
             </li>
           ))}
         </ul>
       </div>
-    </div>
+    </article>
   );
 }

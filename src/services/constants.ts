@@ -5,6 +5,7 @@ export const ROUTES = {
   GET_USER: "/user/",
   GET_TRAINING: (trainingId: string) => `/user/training/${trainingId}`,
   POST_USER: "/user/",
+  POST_TRAINING: "/user/training",
   PUT_TRAINING: (trainingId: string) => `/user/training/${trainingId}`,
   DELETE_TRAINING: (trainingId: string) => `/user/training/${trainingId}`,
 };

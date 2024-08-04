@@ -1,15 +1,11 @@
-body {
-  overflow: auto;
-}
-
 #main {
   padding: 10px 40px;
 
-  & > h1 {
+  & h1 {
     font-size: 40px;
   }
 
-  & > .trainings-section > .training-div {
+  & .trainings-section .training-div {
     background: var(--second-color);
 
     border-radius: var(--border-radius);
@@ -17,24 +13,24 @@ body {
     margin: 20px 0;
     padding: 15px;
 
-    & > .training-header {
+    & .training-header {
       display: flex;
       align-items: center;
 
       gap: 50px;
 
-      & > .training-icons-div {
+      & .training-icons-div {
         display: flex;
         gap: 20px;
 
         margin-left: auto;
         margin-right: 20px;
 
-        & > button {
+        & button {
           background: none;
           border: none;
 
-          & > i {
+          & i {
             cursor: pointer;
 
             &:hover {
@@ -47,7 +43,7 @@ body {
       }
     }
 
-    & > .training-info {
+    & .training-info {
       display: grid;
       grid-template-columns: 25% 25%;
 
@@ -57,15 +53,15 @@ body {
       }
     }
 
-    & > .exercises-div {
+    & .exercises-div {
       margin-top: 30px;
 
-      & > .exercises-title {
+      & .exercises-title {
         font-size: 30px;
       }
 
-      & > .exercises-list {
-        & > li {
+      & .exercises-list {
+        & li {
           margin-left: 20px;
         }
       }
