@@ -2,6 +2,7 @@
 
 import { Exercise } from "..";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Training({
@@ -24,7 +25,9 @@ export default function Training({
   return (
     <article className="training-div">
       <header className="training-header">
-        <h2 className="training-title">Training</h2>
+        <h2 className="training-title">
+          <Link href={`/user/training/${id}`}>Training</Link>
+        </h2>
         <span className="training-date subtitle">{date}</span>
         <div className="training-icons-div">
           <button

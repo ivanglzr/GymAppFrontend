@@ -193,14 +193,60 @@ form {
   }
 }
 
-@media (width <= 1150px) {
+@media (width <= 1024px) {
   form {
     width: 50%;
   }
 }
 
-@media (width <= 700px) {
+@media (width <= 768px) {
   form {
     width: 70%;
+
+    & .numeric-data .numeric-data-group {
+      gap: 20px;
+    }
+  }
+}
+
+@media (width <= 425px) {
+  label {
+    font-size: 15px;
+  }
+
+  form .numeric-data .numeric-data-group {
+    gap: 5px;
+    & input {
+      width: 40px;
+      height: 50px;
+    }
+  }
+
+  form .form-group input[type="text"],
+  form .form-group input[type="date"],
+  form .form-group input[type="email"],
+  form .form-group input[type="password"] {
+    padding: 5px 10px;
+    font-size: 18px;
+  }
+
+  form #btn-submit {
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+@media (width <= 375px) {
+  label {
+    font-size: 12px;
+  }
+
+  form .numeric-data .numeric-data-group input {
+    width: 35px;
+    height: 45px;
+  }
+
+  form a {
+    font-size: 12px;
   }
 }

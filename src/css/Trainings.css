@@ -19,6 +19,15 @@
 
       gap: 50px;
 
+      & h2 a {
+        color: var(--font-color);
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
       & .training-icons-div {
         display: flex;
         gap: 20px;

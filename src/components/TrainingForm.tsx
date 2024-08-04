@@ -17,6 +17,7 @@ import { useTrainingReducer } from "@/hooks/useTrainingReducer";
 
 export default function TrainingForm({
   isEditTraining,
+  trainingId = "",
   training: initialTraining = {
     duration: 0,
     date: new Date(Date.now()),
@@ -34,6 +35,7 @@ export default function TrainingForm({
   },
 }: {
   isEditTraining: boolean;
+  trainingId?: string;
   training?: Training;
 }) {
   const { training, addExercise, addSet, deleteExercise, deleteSet } =
@@ -57,7 +59,7 @@ export default function TrainingForm({
 
       let res;
 
-      if (isEditTraining) res = await putTraining(`${training._id}`, training);
+      if (isEditTraining) res = await putTraining(trainingId, training);
       else if (!isEditTraining) res = await postTraining(training);
 
       if (res.status === "error")
@@ -108,7 +110,10 @@ export default function TrainingForm({
 
             {exercise.sets.map((set, setIndex) => {
               return (
-                <div className="sets-form-group" key={`${set._id}-${setIndex}`}>
+                <div
+                  className="sets-form-group"
+                  key={`${exercise._id}-${set._id}-${setIndex}`}
+                >
                   <h3>
                     Set {setIndex + 1}{" "}
                     <button

@@ -43,7 +43,11 @@ export default function EditTrainingPage({
   return (
     <>
       {!error && training && (
-        <TrainingForm isEditTraining={true} training={training} />
+        <TrainingForm
+          isEditTraining={true}
+          trainingId={trainingId}
+          training={training}
+        />
       )}
       {error && <h2>Couldn&apos;t get training</h2>}
     </>

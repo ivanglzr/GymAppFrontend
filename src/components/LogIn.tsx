@@ -50,11 +50,16 @@ export default function LogIn() {
       <h1>Log in</h1>
       <div className="form-group">
         <label htmlFor="email">Email</label>
-        <input type="email" name="email" id="email" />
+        <input type="email" name="email" id="email" autoComplete="email" />
       </div>
       <div className="form-group">
         <label htmlFor="password">Password</label>
-        <input type="password" name="password" id="password" />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          autoComplete="current-password"
+        />
       </div>
 
       <button type="submit" id="btn-submit">
