@@ -11,32 +11,32 @@ import Trainings from "@/components/Trainings";
 import UserAside from "@/components/UserAside";
 
 export default function UserPage() {
-  const [user, setUser] = useState<User | undefined>(undefined);
   const [trainings, setTrainings] = useState<Training[]>([]);
   const [error, setError] = useState(false);
-  const totalTrainingsDuration = useRef(0);
+  const userName = useRef<string>("");
+  const totalTrainingsDuration = useRef<number>(0);
 
   useEffect(() => {
     getUser()
-      .then(({ user }) => {
-        const trainingsParsed = user.trainings.map((training: Training) => {
+      .then(({ user: { trainings, name } }) => {
+        const trainingsParsed = trainings.map((training: Training) => {
           return {
             ...training,
             date: new Date(training.date),
           };
         });
 
-        totalTrainingsDuration.current = user.trainings.reduce(
+        totalTrainingsDuration.current = trainings.reduce(
           (totalDuration: number, training: Training) => {
             return totalDuration + training.duration;
           },
           0
         );
+        userName.current = name;
 
-        setUser(user);
         setTrainings(trainingsParsed);
       })
-      .catch(_ => setError(true));
+      .catch((_) => setError(true));
   }, []);
 
   return (
@@ -52,13 +52,11 @@ export default function UserPage() {
         <>
           <Aside />
           <Trainings setTrainings={setTrainings} trainings={trainings} />
-          {user && (
-            <UserAside
-              name={user.name}
-              numberOfTrainings={trainings.length}
-              totalTrainingsDuration={totalTrainingsDuration.current}
-            />
-          )}
+          <UserAside
+            name={userName.current}
+            numberOfTrainings={trainings.length}
+            totalTrainingsDuration={totalTrainingsDuration.current}
+          />
         </>
       )}
       {error && <h2>Fetching trainings failed</h2>}

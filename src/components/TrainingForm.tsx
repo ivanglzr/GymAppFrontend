@@ -91,12 +91,15 @@ export default function TrainingForm({
       </div>
       {training.exercises.map((exercise, exerciseIndex) => {
         return (
-          <div className="form-group" key={`${exercise._id}-${exerciseIndex}`}>
+          <div
+            className="form-group"
+            key={`${exercise._id}-${crypto.randomUUID()}`}
+          >
             <label htmlFor={(exerciseIndex + 1).toString()}>
               Exercise {exerciseIndex + 1}{" "}
               <button
                 type="button"
-                onClick={event => deleteExercise(event, exerciseIndex)}
+                onClick={(event) => deleteExercise(event, exerciseIndex)}
               >
                 <i className="fa-solid fa-trash"></i>
               </button>
@@ -112,13 +115,13 @@ export default function TrainingForm({
               return (
                 <div
                   className="sets-form-group"
-                  key={`${exercise._id}-${set._id}-${setIndex}`}
+                  key={`${exercise._id}-${set._id}-${crypto.randomUUID()}`}
                 >
                   <h3>
                     Set {setIndex + 1}{" "}
                     <button
                       type="button"
-                      onClick={event =>
+                      onClick={(event) =>
                         deleteSet(event, exerciseIndex, setIndex)
                       }
                     >
@@ -156,7 +159,7 @@ export default function TrainingForm({
             <button
               type="button"
               className="btn-add btn-add-set"
-              onClick={event => addSet(event, exerciseIndex)}
+              onClick={(event) => addSet(event, exerciseIndex)}
             >
               <i className="fa-solid fa-plus"></i> Add set
             </button>
@@ -168,7 +171,7 @@ export default function TrainingForm({
         type="button"
         className="btn-add"
         id="btn-add-exercise"
-        onClick={event => addExercise(event)}
+        onClick={(event) => addExercise(event)}
       >
         <i className="fa-solid fa-plus"></i> Add exercise
       </button>
