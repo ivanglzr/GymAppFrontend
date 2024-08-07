@@ -1,3 +1,5 @@
+//? User Forms Interfaces
+
 export interface SignInInterface {
   name: string;
   email: string;
@@ -11,6 +13,8 @@ export interface LogInInterface {
   email: string;
   password: string;
 }
+
+//? User Interfaces
 
 export interface Exercise {
   _id?: string;
@@ -39,6 +43,48 @@ export interface User {
   height: number;
   trainings: Array<Training>;
 }
+
+//? Create Exercise Types
+
+type ExerciseEquipments =
+  | "None"
+  | "Barbell"
+  | "Dumbell"
+  | "Kettlebell"
+  | "Machine"
+  | "Plate"
+  | "Resistance Band"
+  | "Suspension"
+  | "Other";
+
+type MuscularGroups =
+  | "Chest"
+  | "Back"
+  | "Shoulders"
+  | "Biceps"
+  | "Triceps"
+  | "Forearms"
+  | "Abs"
+  | "Obliques"
+  | "Quadriceps"
+  | "Hamstrings"
+  | "Glutes"
+  | "Calves"
+  | "Trapezius"
+  | "Lats"
+  | "Lower Back"
+  | "Hip Flexors"
+  | "Adductors"
+  | "Abductors";
+
+export interface CreateExercise {
+  name: string;
+  description?: string;
+  equipment: ExerciseEquipments;
+  muscles: MuscularGroups;
+}
+
+//? Training Reducer
 
 export enum TrainingReducerActions {
   ADD_EXERCISE = "ADD_EXERCISE",
