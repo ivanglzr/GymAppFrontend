@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { Training, User } from "@/index";
+import { Training } from "@/index";
 
 import { getUser } from "@/services/user";
 
@@ -12,9 +12,8 @@ import UserAside from "@/components/UserAside";
 
 export default function UserPage() {
   const [trainings, setTrainings] = useState<Training[]>([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<boolean>(false);
   const userName = useRef<string>("");
-  const totalTrainingsDuration = useRef<number>(0);
 
   useEffect(() => {
     getUser()
@@ -26,17 +25,11 @@ export default function UserPage() {
           };
         });
 
-        totalTrainingsDuration.current = trainings.reduce(
-          (totalDuration: number, training: Training) => {
-            return totalDuration + training.duration;
-          },
-          0
-        );
         userName.current = name;
 
         setTrainings(trainingsParsed);
       })
-      .catch((_) => setError(true));
+      .catch(_ => setError(true));
   }, []);
 
   return (
@@ -55,7 +48,12 @@ export default function UserPage() {
           <UserAside
             name={userName.current}
             numberOfTrainings={trainings.length}
-            totalTrainingsDuration={totalTrainingsDuration.current}
+            totalTrainingsDuration={trainings.reduce(
+              (totalDuration: number, training: Training) => {
+                return totalDuration + training.duration;
+              },
+              0
+            )}
           />
         </>
       )}
