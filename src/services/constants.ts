@@ -8,6 +8,9 @@ export const ROUTES = {
   GET_USER_EXERCISES: "/exercise/",
   POST_USER: "/user/",
   POST_TRAINING: "/user/training/",
+  POST_EXERCISE: "/exercise/",
   PUT_TRAINING: (trainingId: string) => `/user/training/${trainingId}`,
+  PUT_EXERCISE: (exerciseId: string) => `/exercise/${exerciseId}`,
   DELETE_TRAINING: (trainingId: string) => `/user/training/${trainingId}`,
+  DELETE_EXERCISE: (exerciseId: string) => `/exercise/${exerciseId}`,
 };

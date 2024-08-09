@@ -47,7 +47,7 @@ export default function Aside() {
         <Link href="/user/training/create">
           <i className="fa-solid fa-clipboard-list fa-2xl"></i>
         </Link>
-        <Link href="/exercise">
+        <Link href="/user/exercise">
           <i className="fa-solid fa-dumbbell fa-2xl"></i>
         </Link>
         <Link href="/user/settings">

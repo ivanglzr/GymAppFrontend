@@ -32,6 +32,8 @@ export default function UserPage() {
       .catch(_ => setError(true));
   }, []);
 
+  //TODO: Optimize this component by making it SSR
+
   return (
     <div
       style={{

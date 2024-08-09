@@ -40,7 +40,7 @@ export default function Trainings({
             } else {
               setTrainings((prevState: TrainingInterface[]) => {
                 const newState = prevState.filter(
-                  (e) => e._id?.toString() !== _id
+                  e => e._id?.toString() !== _id
                 );
 
                 return newState;

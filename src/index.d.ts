@@ -44,7 +44,7 @@ export interface User {
   trainings: Array<Training>;
 }
 
-//? Create Exercise Types
+//? User Exercise Types
 
 type ExerciseEquipments =
   | "None"
@@ -77,11 +77,12 @@ type MuscularGroups =
   | "Adductors"
   | "Abductors";
 
-export interface CreateExercise {
+export interface UserExercise {
   name: string;
   description?: string;
   equipment: ExerciseEquipments;
   muscles: MuscularGroups;
+  userId?: string;
 }
 
 //? Training Reducer
