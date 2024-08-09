@@ -2,9 +2,11 @@
 
 import "@/css/Forms.css";
 
-import { Training } from "../index.d";
+import { useRef } from "react";
 
 import Swal from "sweetalert2";
+
+import { Training } from "../index.d";
 
 import { useRouter } from "next/navigation";
 
@@ -14,6 +16,8 @@ import { validateTrainingForm } from "@/utils/validateForm";
 import { getFormData } from "@/utils/getFormData";
 
 import { useTrainingReducer } from "@/hooks/useTrainingReducer";
+
+const generateUniqueKey = () => crypto.randomUUID();
 
 export default function TrainingForm({
   isEditTraining,
@@ -48,6 +52,32 @@ export default function TrainingForm({
   const day = String(training.date.getDate()).padStart(2, "0");
 
   const parsedDate = `${year}-${month}-${day}`;
+
+  const exerciseKeysRef = useRef<Map<number, string>>(new Map());
+  const setKeysRef = useRef<Map<number, Map<number, string>>>(new Map());
+
+  // Función para obtener o generar una clave única para un ejercicio
+  const getExerciseKey = (exerciseIndex: number) => {
+    if (!exerciseKeysRef.current.has(exerciseIndex)) {
+      exerciseKeysRef.current.set(exerciseIndex, generateUniqueKey());
+    }
+    return exerciseKeysRef.current.get(exerciseIndex);
+  };
+
+  const getSetKey = (exerciseIndex: number, setIndex: number) => {
+    let exerciseSets = setKeysRef.current.get(exerciseIndex);
+
+    if (!exerciseSets) {
+      exerciseSets = new Map<number, string>();
+      setKeysRef.current.set(exerciseIndex, exerciseSets);
+    }
+
+    if (!exerciseSets.has(setIndex)) {
+      exerciseSets.set(setIndex, generateUniqueKey());
+    }
+
+    return exerciseSets.get(setIndex);
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -90,16 +120,15 @@ export default function TrainingForm({
         <input type="date" id="date" name="date" defaultValue={parsedDate} />
       </div>
       {training.exercises.map((exercise, exerciseIndex) => {
+        const exerciseKey = exercise._id ?? getExerciseKey(exerciseIndex);
+
         return (
-          <div
-            className="form-group"
-            key={`${exercise._id}-${crypto.randomUUID()}`}
-          >
+          <div className="form-group" key={exerciseKey}>
             <label htmlFor={(exerciseIndex + 1).toString()}>
               Exercise {exerciseIndex + 1}{" "}
               <button
                 type="button"
-                onClick={(event) => deleteExercise(event, exerciseIndex)}
+                onClick={event => deleteExercise(event, exerciseIndex)}
               >
                 <i className="fa-solid fa-trash"></i>
               </button>
@@ -112,16 +141,15 @@ export default function TrainingForm({
             />
 
             {exercise.sets.map((set, setIndex) => {
+              const setKey = set._id ?? getSetKey(exerciseIndex, setIndex);
+
               return (
-                <div
-                  className="sets-form-group"
-                  key={`${exercise._id}-${set._id}-${crypto.randomUUID()}`}
-                >
+                <div className="sets-form-group" key={setKey}>
                   <h3>
                     Set {setIndex + 1}{" "}
                     <button
                       type="button"
-                      onClick={(event) =>
+                      onClick={event =>
                         deleteSet(event, exerciseIndex, setIndex)
                       }
                     >
@@ -159,7 +187,7 @@ export default function TrainingForm({
             <button
               type="button"
               className="btn-add btn-add-set"
-              onClick={(event) => addSet(event, exerciseIndex)}
+              onClick={event => addSet(event, exerciseIndex)}
             >
               <i className="fa-solid fa-plus"></i> Add set
             </button>
@@ -171,7 +199,7 @@ export default function TrainingForm({
         type="button"
         className="btn-add"
         id="btn-add-exercise"
-        onClick={(event) => addExercise(event)}
+        onClick={event => addExercise(event)}
       >
         <i className="fa-solid fa-plus"></i> Add exercise
       </button>
