@@ -8,7 +8,7 @@ import "@/css/Forms.css";
 
 import { validateSignInForm } from "@/utils/validateForm";
 
-import { SignInInterface, User } from "../index";
+import { SignInInterface, User } from "../index.d";
 
 import { postUser } from "@/services/user";
 

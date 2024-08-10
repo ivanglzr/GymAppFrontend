@@ -8,7 +8,7 @@ import "@/css/Forms.css";
 
 import { useRouter } from "next/navigation";
 
-import { LogInInterface } from "..";
+import { LogInInterface } from "../index.d";
 
 import { validateLogInForm } from "@/utils/validateForm";
 

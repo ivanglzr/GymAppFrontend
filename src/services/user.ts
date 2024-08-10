@@ -1,4 +1,4 @@
-import { User } from "../index";
+import { User } from "../index.d";
 
 import { ROUTES } from "./constants";
 

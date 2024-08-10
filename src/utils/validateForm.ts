@@ -5,7 +5,7 @@ import {
   UserExercise,
   muscularGroups,
   exerciseEquipments,
-} from "@/index";
+} from "@/index.d";
 
 export function validateSignInForm({
   name,

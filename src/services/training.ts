@@ -1,6 +1,6 @@
 import { ROUTES } from "./constants";
 
-import { Training } from "..";
+import { Training } from "../index.d";
 
 export async function getTraining(trainingId: string) {
   const petition = await fetch(ROUTES.URI + ROUTES.GET_TRAINING(trainingId), {

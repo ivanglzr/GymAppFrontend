@@ -1,6 +1,6 @@
 "use client";
 
-import { Exercise } from "..";
+import { Exercise } from "../index.d";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";

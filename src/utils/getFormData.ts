@@ -1,4 +1,4 @@
-import { Exercise, Training } from "..";
+import { Exercise, Training } from "../index.d";
 
 export function getFormData(form: HTMLFormElement): Training {
   const data = Object.fromEntries(new FormData(form));

@@ -2,7 +2,7 @@ import "@/css/Trainings.css";
 
 import Swal from "sweetalert2";
 
-import { Training as TrainingInterface } from "..";
+import { Training as TrainingInterface } from "../index.d";
 
 import { deleteTraining } from "@/services/training";
 
