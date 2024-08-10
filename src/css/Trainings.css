@@ -1,5 +1,6 @@
 #main {
-  padding: 10px 40px;
+  padding: 10px 0 10px 40px;
+  margin-left: 5%;
 
   & h1 {
     font-size: 40px;

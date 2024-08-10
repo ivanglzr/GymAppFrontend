@@ -39,8 +39,7 @@ export default function UserPage() {
       style={{
         minHeight: "100vh",
         display: "grid",
-        gridTemplateColumns: "80% 16%",
-        paddingLeft: "5%",
+        gridTemplateColumns: "80% 15%",
       }}
     >
       {!error && (
