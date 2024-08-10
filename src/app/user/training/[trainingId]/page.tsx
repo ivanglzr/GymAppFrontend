@@ -18,26 +18,30 @@ export default function TrainingPage({
   const numberOfSets = useRef<number>(0);
 
   useEffect(() => {
-    getTraining(trainingId).then(res => {
-      if (res.status === "error") {
-        setError(true);
-        return Swal.fire("Error", res.message, "error");
-      }
+    getTraining(trainingId)
+      .then(res => {
+        if (res.status === "error") {
+          setError(true);
+          Swal.fire("Error", res.message, "error");
+          return;
+        }
 
-      if (!res.training) {
-        setError(true);
-        return Swal.fire("Error", res.message, "error");
-      }
+        if (!res.training) {
+          setError(true);
+          Swal.fire("Error", res.message, "error");
+          return;
+        }
 
-      numberOfSets.current = res.training.exercises.reduce(
-        (totalSets: number, exercise: Exercise) => {
-          return totalSets + exercise.sets.length;
-        },
-        0
-      );
+        numberOfSets.current = res.training.exercises.reduce(
+          (totalSets: number, exercise: Exercise) => {
+            return totalSets + exercise.sets.length;
+          },
+          0
+        );
 
-      setTraining(res.training);
-    });
+        setTraining(res.training);
+      })
+      .catch(_ => setError(true));
   });
 
   return (

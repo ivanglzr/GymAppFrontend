@@ -32,9 +32,14 @@ export default function SignIn() {
       height: parseInt(data.height as string, 10),
     };
 
-    try {
-      validateSignInForm(formDataTyped);
+    const error = validateSignInForm(formDataTyped);
 
+    if (error) {
+      Swal.fire("Error", error, "error");
+      return;
+    }
+
+    try {
       const user: User = {
         ...formDataTyped,
         trainings: [],

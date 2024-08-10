@@ -28,13 +28,18 @@ export default function LogIn() {
       password: data.password as string,
     };
 
-    try {
-      validateLogInForm(formDataTyped);
+    const error = validateLogInForm(formDataTyped);
 
+    if (error) {
+      Swal.fire("Error", error, "error");
+      return;
+    }
+
+    try {
       const res = await login(formDataTyped.email, formDataTyped.password);
 
       if (res.status === "error") {
-        return Swal.fire("Error", `${res.message}`, "error");
+        throw new Error(res.message);
       }
 
       Swal.fire("Success", res.message, "success");

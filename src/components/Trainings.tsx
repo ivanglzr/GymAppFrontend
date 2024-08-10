@@ -37,17 +37,16 @@ export default function Trainings({
 
             if (status === "error") {
               Swal.fire("Error", message, "error");
-            } else {
-              setTrainings((prevState: TrainingInterface[]) => {
-                const newState = prevState.filter(
-                  e => e._id?.toString() !== _id
-                );
-
-                return newState;
-              });
-
-              Swal.fire("Success", message, "success");
+              return;
             }
+
+            setTrainings((prevState: TrainingInterface[]) => {
+              const newState = prevState.filter(e => e._id?.toString() !== _id);
+
+              return newState;
+            });
+
+            Swal.fire("Success", message, "success");
           };
 
           return (

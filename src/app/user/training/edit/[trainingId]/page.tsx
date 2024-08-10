@@ -30,8 +30,11 @@ export default function EditTrainingPage({
           date: new Date(res.training.date),
         };
 
-        if (res.status === "error")
-          return Swal.fire("Error", res.message, "error");
+        if (res.status === "error") {
+          Swal.fire("Error", res.message, "error");
+          setError(true);
+          return;
+        }
 
         setTraining(parsedTraining);
       })

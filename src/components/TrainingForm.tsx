@@ -84,16 +84,22 @@ export default function TrainingForm({
 
     const training = getFormData(event.currentTarget);
 
-    try {
-      validateTrainingForm(training);
+    const error = validateTrainingForm(training);
 
+    if (error) {
+      Swal.fire("Error", error, "error");
+      return;
+    }
+
+    try {
       let res;
 
       if (isEditTraining) res = await putTraining(trainingId, training);
       else if (!isEditTraining) res = await postTraining(training);
 
-      if (res.status === "error")
-        return Swal.fire("Error", res.message, "error");
+      if (res.status === "error") {
+        throw new Error(res.message);
+      }
 
       Swal.fire("Success", res.message, "success");
 

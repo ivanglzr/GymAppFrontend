@@ -46,7 +46,7 @@ export interface User {
 
 //? User Exercise Types
 
-type ExerciseEquipments =
+export type ExerciseEquipments =
   | "None"
   | "Barbell"
   | "Dumbell"
@@ -57,7 +57,19 @@ type ExerciseEquipments =
   | "Suspension"
   | "Other";
 
-type MuscularGroups =
+export const exerciseEquipments: ExerciseEquipments[] = [
+  "None",
+  "Barbell",
+  "Dumbell",
+  "Kettlebell",
+  "Machine",
+  "Plate",
+  "Resistance Band",
+  "Suspension",
+  "Other",
+];
+
+export type MuscularGroups =
   | "Chest"
   | "Back"
   | "Shoulders"
@@ -77,11 +89,32 @@ type MuscularGroups =
   | "Adductors"
   | "Abductors";
 
+export const muscularGroups: MuscularGroups[] = [
+  "Chest",
+  "Back",
+  "Shoulders",
+  "Biceps",
+  "Triceps",
+  "Forearms",
+  "Abs",
+  "Obliques",
+  "Quadriceps",
+  "Hamstrings",
+  "Glutes",
+  "Calves",
+  "Trapezius",
+  "Lats",
+  "Lower Back",
+  "Hip Flexors",
+  "Adductors",
+  "Abductors",
+];
+
 export interface UserExercise {
   name: string;
   description?: string;
   equipment: ExerciseEquipments;
-  muscles: MuscularGroups;
+  muscle: MuscularGroups;
   userId?: string;
 }
 

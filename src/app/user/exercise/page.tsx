@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { getUserExercises } from "@/services/exercise";
 
 import { UserExercise } from "@/index";
+
+const generateRandomKey = () => crypto.randomUUID();
 
 export default function UserExercisesPage() {
   const [exercises, setExercises] = useState<UserExercise[] | undefined>(
@@ -21,15 +23,24 @@ export default function UserExercisesPage() {
     });
   }, []);
 
+  const exercisesKeys = useRef<Map<number, string>>(new Map());
+
+  const getExerciseKey = (exerciseIndex: number) => {
+    if (!exercisesKeys.current.has(exerciseIndex)) {
+      exercisesKeys.current.set(exerciseIndex, generateRandomKey());
+    }
+    return exercisesKeys.current.get(exerciseIndex);
+  };
+
   //TODO: Exercises UI, create Exercises component and Exercise component
   return (
     <>
       {exercises &&
-        exercises.map(e => (
-          <div key={`${e.userId}-${crypto.randomUUID()}`}>
+        exercises.map((e, index) => (
+          <div key={getExerciseKey(index)}>
             <h2>{e.name}</h2>
             <p>{e.description}</p>
-            <span>{e.muscles}</span> <br />
+            <span>{e.muscle}</span> <br />
             <span>{e.equipment}</span>
           </div>
         ))}

@@ -31,7 +31,8 @@ export default function Aside() {
     const res = await logout();
 
     if (res.status === "error") {
-      return Swal.fire("Error", res.message, "error");
+      Swal.fire("Error", res.message, "error");
+      return 
     }
 
     Swal.fire("Success", res.message, "success");
