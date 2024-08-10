@@ -2,7 +2,7 @@
 
 import "@/css/Forms.css";
 
-import { useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 import Swal from "sweetalert2";
 
@@ -13,11 +13,18 @@ import { useRouter } from "next/navigation";
 import { postTraining, putTraining } from "@/services/training";
 
 import { validateTrainingForm } from "@/utils/validateForm";
-import { getFormData } from "@/utils/getFormData";
 
 import { useTrainingReducer } from "@/hooks/useTrainingReducer";
 
 const generateUniqueKey = () => crypto.randomUUID();
+
+const getParsedDate = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
 
 export default function TrainingForm({
   isEditTraining,
@@ -42,72 +49,139 @@ export default function TrainingForm({
   trainingId?: string;
   training?: Training;
 }) {
-  const { training, addExercise, addSet, deleteExercise, deleteSet } =
-    useTrainingReducer(initialTraining);
+  const {
+    training,
+    setTraining,
+    addExercise,
+    addSet,
+    deleteExercise,
+    deleteSet,
+  } = useTrainingReducer(initialTraining);
 
   const router = useRouter();
 
-  const year = training.date.getFullYear();
-  const month = String(training.date.getMonth() + 1).padStart(2, "0");
-  const day = String(training.date.getDate()).padStart(2, "0");
+  const parsedDate = useMemo(
+    () => getParsedDate(training.date),
+    [training.date]
+  );
 
-  const parsedDate = `${year}-${month}-${day}`;
+  const exerciseKeysRef = useRef<Array<string>>([]);
+  const setKeysRef = useRef<Array<Array<string>>>([]);
 
-  const exerciseKeysRef = useRef<Map<number, string>>(new Map());
-  const setKeysRef = useRef<Map<number, Map<number, string>>>(new Map());
-
-  // Función para obtener o generar una clave única para un ejercicio
   const getExerciseKey = (exerciseIndex: number) => {
-    if (!exerciseKeysRef.current.has(exerciseIndex)) {
-      exerciseKeysRef.current.set(exerciseIndex, generateUniqueKey());
+    if (!exerciseKeysRef.current[exerciseIndex]) {
+      exerciseKeysRef.current[exerciseIndex] = generateUniqueKey();
     }
-    return exerciseKeysRef.current.get(exerciseIndex);
+    return exerciseKeysRef.current[exerciseIndex];
   };
 
   const getSetKey = (exerciseIndex: number, setIndex: number) => {
-    let exerciseSets = setKeysRef.current.get(exerciseIndex);
+    let exerciseSets = setKeysRef.current[exerciseIndex];
 
     if (!exerciseSets) {
-      exerciseSets = new Map<number, string>();
-      setKeysRef.current.set(exerciseIndex, exerciseSets);
+      exerciseSets = [];
+      setKeysRef.current[exerciseIndex] = exerciseSets;
     }
 
-    if (!exerciseSets.has(setIndex)) {
-      exerciseSets.set(setIndex, generateUniqueKey());
+    if (!exerciseSets[setIndex]) {
+      exerciseSets[setIndex] = generateUniqueKey();
     }
 
-    return exerciseSets.get(setIndex);
+    return exerciseSets[setIndex];
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-    const training = getFormData(event.currentTarget);
+      const error = validateTrainingForm(training);
 
-    const error = validateTrainingForm(training);
-
-    if (error) {
-      Swal.fire("Error", error, "error");
-      return;
-    }
-
-    try {
-      let res;
-
-      if (isEditTraining) res = await putTraining(trainingId, training);
-      else if (!isEditTraining) res = await postTraining(training);
-
-      if (res.status === "error") {
-        throw new Error(res.message);
+      if (error) {
+        Swal.fire("Error", error, "error");
+        return;
       }
 
-      Swal.fire("Success", res.message, "success");
+      try {
+        let res;
 
-      router.push("/user");
-    } catch (err) {
-      Swal.fire("Error", `${err}`, "error");
-    }
+        if (isEditTraining) res = await putTraining(trainingId, training);
+        else if (!isEditTraining) res = await postTraining(training);
+
+        if (res.status === "error") {
+          throw new Error(res.message);
+        }
+
+        Swal.fire("Success", res.message, "success");
+
+        router.push("/user");
+      } catch (err) {
+        Swal.fire("Error", `${err}`, "error");
+      }
+    },
+    [isEditTraining, trainingId, training, router]
+  );
+
+  const handleDeleteExercise = useCallback(
+    (exerciseIndex: number) => {
+      deleteExercise(exerciseIndex);
+      exerciseKeysRef.current.splice(exerciseIndex, 1);
+      setKeysRef.current.splice(exerciseIndex, 1);
+    },
+    [deleteExercise]
+  );
+
+  const handleDeleteSet = useCallback(
+    (exerciseIndex: number, setIndex: number) => {
+      deleteSet(exerciseIndex, setIndex);
+      setKeysRef.current[exerciseIndex].splice(setIndex, 1);
+    },
+    [deleteSet]
+  );
+
+  const setExerciseName = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    exerciseIndex: number
+  ) => {
+    const newExercises = structuredClone(training.exercises);
+    newExercises[exerciseIndex].name = event.currentTarget.value;
+
+    setTraining({
+      ...training,
+      exercises: newExercises,
+    });
   };
+
+  const setSetWeight = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    exerciseIndex: number,
+    setIndex: number
+  ) => {
+    const newExercises = structuredClone(training.exercises);
+    newExercises[exerciseIndex].sets[setIndex].weight =
+      event.currentTarget.valueAsNumber;
+
+    setTraining({
+      ...training,
+      exercises: newExercises,
+    });
+  };
+
+  const setSetReps = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    exerciseIndex: number,
+    setIndex: number
+  ) => {
+    const newExercises = structuredClone(training.exercises);
+    newExercises[exerciseIndex].sets[setIndex].reps =
+      event.currentTarget.valueAsNumber;
+
+    setTraining({
+      ...training,
+      exercises: newExercises,
+    });
+  };
+
+  console.log("render");
 
   return (
     <form id="form" onSubmit={handleSubmit}>
@@ -118,32 +192,50 @@ export default function TrainingForm({
           type="number"
           name="duration"
           id="duration"
-          defaultValue={training.duration}
+          onChange={event =>
+            setTraining({
+              ...training,
+              duration: event.currentTarget.valueAsNumber,
+            })
+          }
+          value={training.duration}
         />
       </div>
       <div className="form-group">
         <label htmlFor="date">Date</label>
-        <input type="date" id="date" name="date" defaultValue={parsedDate} />
+        <input
+          type="date"
+          id="date"
+          name="date"
+          onChange={event =>
+            setTraining({
+              ...training,
+              date: new Date(event.currentTarget.value),
+            })
+          }
+          value={parsedDate}
+        />
       </div>
       {training.exercises.map((exercise, exerciseIndex) => {
         const exerciseKey = exercise._id ?? getExerciseKey(exerciseIndex);
 
         return (
           <div className="form-group" key={exerciseKey}>
-            <label htmlFor={(exerciseIndex + 1).toString()}>
+            <label htmlFor={`exercise-${exerciseIndex + 1}-${exerciseKey}`}>
               Exercise {exerciseIndex + 1}{" "}
               <button
                 type="button"
-                onClick={event => deleteExercise(event, exerciseIndex)}
+                onClick={() => handleDeleteExercise(exerciseIndex)}
               >
                 <i className="fa-solid fa-trash"></i>
               </button>
             </label>
             <input
               type="text"
-              name={(exerciseIndex + 1).toString()}
-              id={(exerciseIndex + 1).toString()}
-              defaultValue={exercise.name}
+              name={`exercise-${exerciseIndex + 1}-${exerciseKey}`}
+              id={`exercise-${exerciseIndex + 1}-${exerciseKey}`}
+              onChange={event => setExerciseName(event, exerciseIndex)}
+              value={exercise.name}
             />
 
             {exercise.sets.map((set, setIndex) => {
@@ -155,9 +247,7 @@ export default function TrainingForm({
                     Set {setIndex + 1}{" "}
                     <button
                       type="button"
-                      onClick={event =>
-                        deleteSet(event, exerciseIndex, setIndex)
-                      }
+                      onClick={() => handleDeleteSet(exerciseIndex, setIndex)}
                     >
                       <i className="fa-solid fa-trash"></i>
                     </button>
@@ -165,25 +255,47 @@ export default function TrainingForm({
 
                   <div className="set-divs-container">
                     <div className="sets-form-group-div">
-                      <label htmlFor={`${exerciseIndex + 1}-${setIndex + 1}-w`}>
+                      <label
+                        htmlFor={`set-${exerciseIndex + 1}-${
+                          setIndex + 1
+                        }-${setKey}-weight`}
+                      >
                         Weight
                       </label>
                       <input
                         type="number"
-                        name={`${exerciseIndex + 1}-${setIndex + 1}-w`}
-                        id={`${exerciseIndex + 1}-${setIndex + 1}-w`}
-                        defaultValue={set.weight}
+                        name={`set-${exerciseIndex + 1}-${
+                          setIndex + 1
+                        }-${setKey}-weight`}
+                        id={`set-${exerciseIndex + 1}-${
+                          setIndex + 1
+                        }-${setKey}-weight`}
+                        onChange={event =>
+                          setSetWeight(event, exerciseIndex, setIndex)
+                        }
+                        value={set.weight}
                       />
                     </div>
                     <div className="sets-form-group-div">
-                      <label htmlFor={`${exerciseIndex + 1}-${setIndex + 1}-r`}>
+                      <label
+                        htmlFor={`set-${exerciseIndex + 1}-${
+                          setIndex + 1
+                        }-${setKey}-reps`}
+                      >
                         Reps
                       </label>
                       <input
                         type="number"
-                        name={`${exerciseIndex + 1}-${setIndex + 1}-r`}
-                        id={`${exerciseIndex + 1}-${setIndex + 1}-r`}
-                        defaultValue={set.reps}
+                        name={`set-${exerciseIndex + 1}-${
+                          setIndex + 1
+                        }-${setKey}-reps`}
+                        id={`set-${exerciseIndex + 1}-${
+                          setIndex + 1
+                        }-${setKey}-reps`}
+                        onChange={event =>
+                          setSetReps(event, exerciseIndex, setIndex)
+                        }
+                        value={set.reps}
                       />
                     </div>
                   </div>
@@ -193,7 +305,7 @@ export default function TrainingForm({
             <button
               type="button"
               className="btn-add btn-add-set"
-              onClick={event => addSet(event, exerciseIndex)}
+              onClick={() => addSet(exerciseIndex)}
             >
               <i className="fa-solid fa-plus"></i> Add set
             </button>
@@ -205,7 +317,7 @@ export default function TrainingForm({
         type="button"
         className="btn-add"
         id="btn-add-exercise"
-        onClick={event => addExercise(event)}
+        onClick={addExercise}
       >
         <i className="fa-solid fa-plus"></i> Add exercise
       </button>

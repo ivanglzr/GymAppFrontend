@@ -10,6 +10,10 @@ export function TrainingReducer(
 ): Training {
   const { type } = action;
 
+  if (type === TrainingReducerActions.SET_TRAINING) {
+    return action.payload;
+  }
+
   if (type === TrainingReducerActions.ADD_EXERCISE) {
     return {
       ...state,
