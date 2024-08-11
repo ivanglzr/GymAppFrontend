@@ -6,7 +6,7 @@ import { useCallback, useMemo, useRef } from "react";
 
 import Swal from "sweetalert2";
 
-import { Training } from "../index.d";
+import { Exercise, Training } from "../index.d";
 
 import { useRouter } from "next/navigation";
 
@@ -25,6 +25,134 @@ const getParsedDate = (date: Date): string => {
 
   return `${year}-${month}-${day}`;
 };
+
+type ExerciseFormProps = {
+  exercise: Exercise;
+  exerciseIndex: number;
+  exerciseKey: string;
+  setExerciseName: (exerciseIndex: number, name: string) => void;
+  addSet: (exerciseIndex: number) => void;
+  setSetWeight: (
+    exerciseIndex: number,
+    setIndex: number,
+    weight: number
+  ) => void;
+  setSetReps: (exerciseIndex: number, setIndex: number, reps: number) => void;
+  deleteExercise: (exerciseIndex: number) => void;
+  deleteSet: (exerciseIndex: number, setIndex: number) => void;
+  getSetKey: (exerciseIndex: number, setIndex: number) => string;
+};
+
+function ExerciseForm({
+  exercise,
+  exerciseIndex,
+  exerciseKey,
+  setExerciseName,
+  addSet,
+  setSetWeight,
+  setSetReps,
+  deleteExercise,
+  deleteSet,
+  getSetKey,
+}: ExerciseFormProps) {
+  return (
+    <div className="form-group" key={exerciseKey}>
+      <label htmlFor={`exercise-${exerciseIndex + 1}-${exerciseKey}`}>
+        Exercise {exerciseIndex + 1}{" "}
+        <button type="button" onClick={() => deleteExercise(exerciseIndex)}>
+          <i className="fa-solid fa-trash"></i>
+        </button>
+      </label>
+      <input
+        type="text"
+        name={`exercise-${exerciseIndex + 1}-${exerciseKey}`}
+        id={`exercise-${exerciseIndex + 1}-${exerciseKey}`}
+        onChange={event =>
+          setExerciseName(exerciseIndex, event.currentTarget.value)
+        }
+        value={exercise.name}
+      />
+
+      {exercise.sets.map((set, setIndex) => {
+        const setKey = set._id ?? getSetKey(exerciseIndex, setIndex);
+
+        return (
+          <div className="sets-form-group" key={setKey}>
+            <h3>
+              Set {setIndex + 1}{" "}
+              <button
+                type="button"
+                onClick={() => deleteSet(exerciseIndex, setIndex)}
+              >
+                <i className="fa-solid fa-trash"></i>
+              </button>
+            </h3>
+
+            <div className="set-divs-container">
+              <div className="sets-form-group-div">
+                <label
+                  htmlFor={`set-${exerciseIndex + 1}-${
+                    setIndex + 1
+                  }-${setKey}-weight`}
+                >
+                  Weight
+                </label>
+                <input
+                  type="number"
+                  name={`set-${exerciseIndex + 1}-${
+                    setIndex + 1
+                  }-${setKey}-weight`}
+                  id={`set-${exerciseIndex + 1}-${
+                    setIndex + 1
+                  }-${setKey}-weight`}
+                  onChange={event =>
+                    setSetWeight(
+                      exerciseIndex,
+                      setIndex,
+                      event.currentTarget.valueAsNumber
+                    )
+                  }
+                  value={set.weight}
+                />
+              </div>
+              <div className="sets-form-group-div">
+                <label
+                  htmlFor={`set-${exerciseIndex + 1}-${
+                    setIndex + 1
+                  }-${setKey}-reps`}
+                >
+                  Reps
+                </label>
+                <input
+                  type="number"
+                  name={`set-${exerciseIndex + 1}-${
+                    setIndex + 1
+                  }-${setKey}-reps`}
+                  id={`set-${exerciseIndex + 1}-${setIndex + 1}-${setKey}-reps`}
+                  onChange={event =>
+                    setSetReps(
+                      exerciseIndex,
+                      setIndex,
+                      event.currentTarget.valueAsNumber
+                    )
+                  }
+                  value={set.reps}
+                />
+              </div>
+            </div>
+          </div>
+        );
+      })}
+      <button
+        type="button"
+        className="btn-add btn-add-set"
+        onClick={() => addSet(exerciseIndex)}
+      >
+        <i className="fa-solid fa-plus"></i> Add set
+      </button>
+    </div>
+  );
+}
 
 export default function TrainingForm({
   isEditTraining,
@@ -51,7 +179,11 @@ export default function TrainingForm({
 }) {
   const {
     training,
-    setTraining,
+    setDuration,
+    setDate,
+    setExerciseName,
+    setSetWeight,
+    setSetReps,
     addExercise,
     addSet,
     deleteExercise,
@@ -138,51 +270,6 @@ export default function TrainingForm({
     [deleteSet]
   );
 
-  const setExerciseName = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    exerciseIndex: number
-  ) => {
-    const newExercises = structuredClone(training.exercises);
-    newExercises[exerciseIndex].name = event.currentTarget.value;
-
-    setTraining({
-      ...training,
-      exercises: newExercises,
-    });
-  };
-
-  const setSetWeight = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    exerciseIndex: number,
-    setIndex: number
-  ) => {
-    const newExercises = structuredClone(training.exercises);
-    newExercises[exerciseIndex].sets[setIndex].weight =
-      event.currentTarget.valueAsNumber;
-
-    setTraining({
-      ...training,
-      exercises: newExercises,
-    });
-  };
-
-  const setSetReps = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    exerciseIndex: number,
-    setIndex: number
-  ) => {
-    const newExercises = structuredClone(training.exercises);
-    newExercises[exerciseIndex].sets[setIndex].reps =
-      event.currentTarget.valueAsNumber;
-
-    setTraining({
-      ...training,
-      exercises: newExercises,
-    });
-  };
-
-  console.log("render");
-
   return (
     <form id="form" onSubmit={handleSubmit}>
       <h1>{isEditTraining ? "Edit Training" : "Create Training"}</h1>
@@ -192,12 +279,7 @@ export default function TrainingForm({
           type="number"
           name="duration"
           id="duration"
-          onChange={event =>
-            setTraining({
-              ...training,
-              duration: event.currentTarget.valueAsNumber,
-            })
-          }
+          onChange={event => setDuration(event.currentTarget.valueAsNumber)}
           value={training.duration}
         />
       </div>
@@ -207,110 +289,27 @@ export default function TrainingForm({
           type="date"
           id="date"
           name="date"
-          onChange={event =>
-            setTraining({
-              ...training,
-              date: new Date(event.currentTarget.value),
-            })
-          }
+          onChange={event => setDate(new Date(event.currentTarget.value))}
           value={parsedDate}
         />
       </div>
       {training.exercises.map((exercise, exerciseIndex) => {
         const exerciseKey = exercise._id ?? getExerciseKey(exerciseIndex);
 
-        return (
-          <div className="form-group" key={exerciseKey}>
-            <label htmlFor={`exercise-${exerciseIndex + 1}-${exerciseKey}`}>
-              Exercise {exerciseIndex + 1}{" "}
-              <button
-                type="button"
-                onClick={() => handleDeleteExercise(exerciseIndex)}
-              >
-                <i className="fa-solid fa-trash"></i>
-              </button>
-            </label>
-            <input
-              type="text"
-              name={`exercise-${exerciseIndex + 1}-${exerciseKey}`}
-              id={`exercise-${exerciseIndex + 1}-${exerciseKey}`}
-              onChange={event => setExerciseName(event, exerciseIndex)}
-              value={exercise.name}
-            />
+        const props: ExerciseFormProps = {
+          exercise,
+          exerciseIndex,
+          exerciseKey,
+          setExerciseName,
+          addSet,
+          setSetWeight,
+          setSetReps,
+          deleteExercise: handleDeleteExercise,
+          deleteSet: handleDeleteSet,
+          getSetKey,
+        };
 
-            {exercise.sets.map((set, setIndex) => {
-              const setKey = set._id ?? getSetKey(exerciseIndex, setIndex);
-
-              return (
-                <div className="sets-form-group" key={setKey}>
-                  <h3>
-                    Set {setIndex + 1}{" "}
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteSet(exerciseIndex, setIndex)}
-                    >
-                      <i className="fa-solid fa-trash"></i>
-                    </button>
-                  </h3>
-
-                  <div className="set-divs-container">
-                    <div className="sets-form-group-div">
-                      <label
-                        htmlFor={`set-${exerciseIndex + 1}-${
-                          setIndex + 1
-                        }-${setKey}-weight`}
-                      >
-                        Weight
-                      </label>
-                      <input
-                        type="number"
-                        name={`set-${exerciseIndex + 1}-${
-                          setIndex + 1
-                        }-${setKey}-weight`}
-                        id={`set-${exerciseIndex + 1}-${
-                          setIndex + 1
-                        }-${setKey}-weight`}
-                        onChange={event =>
-                          setSetWeight(event, exerciseIndex, setIndex)
-                        }
-                        value={set.weight}
-                      />
-                    </div>
-                    <div className="sets-form-group-div">
-                      <label
-                        htmlFor={`set-${exerciseIndex + 1}-${
-                          setIndex + 1
-                        }-${setKey}-reps`}
-                      >
-                        Reps
-                      </label>
-                      <input
-                        type="number"
-                        name={`set-${exerciseIndex + 1}-${
-                          setIndex + 1
-                        }-${setKey}-reps`}
-                        id={`set-${exerciseIndex + 1}-${
-                          setIndex + 1
-                        }-${setKey}-reps`}
-                        onChange={event =>
-                          setSetReps(event, exerciseIndex, setIndex)
-                        }
-                        value={set.reps}
-                      />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-            <button
-              type="button"
-              className="btn-add btn-add-set"
-              onClick={() => addSet(exerciseIndex)}
-            >
-              <i className="fa-solid fa-plus"></i> Add set
-            </button>
-          </div>
-        );
+        return <ExerciseForm key={exerciseKey} {...props} />;
       })}
 
       <button

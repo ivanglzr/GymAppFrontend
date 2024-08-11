@@ -121,7 +121,11 @@ export interface UserExercise {
 //? Training Reducer
 
 export enum TrainingReducerActions {
-  SET_TRAINING = "SET_TRAINING",
+  SET_DURATION = "SET_DURATION",
+  SET_DATE = "SET_DATE",
+  SET_EXERCISE_NAME = "SET_EXERCISE_NAME",
+  SET_SET_WEIGHT = "SET_SET_WEIGHT",
+  SET_SET_REPS = "SET_SET_REPS",
   ADD_EXERCISE = "ADD_EXERCISE",
   DELETE_EXERCISE = "DELETE_EXERCISE",
   ADD_SET = "ADD_SET",
@@ -129,7 +133,20 @@ export enum TrainingReducerActions {
 }
 
 export type TrainingReducerActionTypes =
-  | { type: TrainingReducerActions.SET_TRAINING; payload: Training }
+  | { type: TrainingReducerActions.SET_DURATION; payload: number }
+  | { type: TrainingReducerActions.SET_DATE; payload: Date }
+  | {
+      type: TrainingReducerActions.SET_EXERCISE_NAME;
+      payload: { exerciseIndex: number; name: string };
+    }
+  | {
+      type: TrainingReducerActions.SET_SET_WEIGHT;
+      payload: { exerciseIndex: number; setIndex: number; weight: number };
+    }
+  | {
+      type: TrainingReducerActions.SET_SET_REPS;
+      payload: { exerciseIndex: number; setIndex: number; reps: number };
+    }
   | { type: TrainingReducerActions.ADD_EXERCISE }
   | { type: TrainingReducerActions.ADD_SET; payload: number }
   | { type: TrainingReducerActions.DELETE_EXERCISE; payload: number }

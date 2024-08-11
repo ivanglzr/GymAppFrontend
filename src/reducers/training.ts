@@ -10,8 +10,54 @@ export function TrainingReducer(
 ): Training {
   const { type } = action;
 
-  if (type === TrainingReducerActions.SET_TRAINING) {
-    return action.payload;
+  if (type === TrainingReducerActions.SET_DURATION) {
+    return {
+      ...state,
+      duration: action.payload,
+    };
+  }
+
+  if (type === TrainingReducerActions.SET_DATE) {
+    return {
+      ...state,
+      date: action.payload,
+    };
+  }
+
+  if (type === TrainingReducerActions.SET_EXERCISE_NAME) {
+    const { exerciseIndex, name } = action.payload;
+
+    const newExercises = structuredClone(state.exercises);
+    newExercises[exerciseIndex].name = name;
+
+    return {
+      ...state,
+      exercises: newExercises,
+    };
+  }
+
+  if (type === TrainingReducerActions.SET_SET_WEIGHT) {
+    const { exerciseIndex, setIndex, weight } = action.payload;
+
+    const newExercises = structuredClone(state.exercises);
+    newExercises[exerciseIndex].sets[setIndex].weight = weight;
+
+    return {
+      ...state,
+      exercises: newExercises,
+    };
+  }
+
+  if (type === TrainingReducerActions.SET_SET_REPS) {
+    const { exerciseIndex, setIndex, reps } = action.payload;
+
+    const newExercises = structuredClone(state.exercises);
+    newExercises[exerciseIndex].sets[setIndex].reps = reps;
+
+    return {
+      ...state,
+      exercises: newExercises,
+    };
   }
 
   if (type === TrainingReducerActions.ADD_EXERCISE) {
