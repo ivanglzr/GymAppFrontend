@@ -118,6 +118,12 @@ export interface UserExercise {
   userId?: string;
 }
 
+//? Backend Responses
+interface BackendReponse {
+  status: "success" | "error";
+  message: string;
+}
+
 //? Training Reducer
 
 export enum TrainingReducerActions {
