@@ -1,38 +1,25 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-
-import { Training } from "@/index";
-
-import { getUser } from "@/services/user";
+import { Training } from "@/index.d";
 
 import Aside from "@/components/Aside";
 import Trainings from "@/components/Trainings";
 import UserAside from "@/components/UserAside";
 
+import { useUser } from "@/hooks/useUser";
+import { useTrainings } from "@/hooks/useTrainings";
+
 export default function UserPage() {
-  const [trainings, setTrainings] = useState<Training[]>([]);
-  const [error, setError] = useState<boolean>(false);
-  const userName = useRef<string>("");
+  const { user, loading, error } = useUser();
+  const { trainings, setTrainings } = useTrainings();
 
-  useEffect(() => {
-    getUser()
-      .then(({ user: { trainings, name } }) => {
-        const trainingsParsed = trainings.map((training: Training) => {
-          return {
-            ...training,
-            date: new Date(training.date),
-          };
-        });
+  const userName = user?.name;
 
-        userName.current = name;
-
-        setTrainings(trainingsParsed);
-      })
-      .catch(_ => setError(true));
-  }, []);
-
-  //TODO: Optimize this component by making it SSR
+  const numberOfTrainings = trainings.length;
+  const totalTrainingsDuration = trainings.reduce(
+    (totalDuration: number, training: Training) => {
+      return totalDuration + training.duration;
+    },
+    0
+  );
 
   return (
     <div
@@ -42,22 +29,18 @@ export default function UserPage() {
         gridTemplateColumns: "80% 15%",
       }}
     >
-      {!error && (
+      {!error && !loading && (
         <>
           <Aside />
           <Trainings setTrainings={setTrainings} trainings={trainings} />
           <UserAside
-            name={userName.current}
-            numberOfTrainings={trainings.length}
-            totalTrainingsDuration={trainings.reduce(
-              (totalDuration: number, training: Training) => {
-                return totalDuration + training.duration;
-              },
-              0
-            )}
+            name={userName ?? ""}
+            numberOfTrainings={numberOfTrainings}
+            totalTrainingsDuration={totalTrainingsDuration}
           />
         </>
       )}
+      {loading && <h2>Cargando...</h2>}
       {error && <h2>Fetching trainings failed</h2>}
     </div>
   );
