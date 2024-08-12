@@ -2,8 +2,6 @@
 
 import "@/css/Aside.css";
 
-import Swal from "sweetalert2";
-
 import { useState } from "react";
 
 import Link from "next/link";
@@ -31,11 +29,12 @@ export default function Aside() {
     const res = await logout();
 
     if (res.status === "error") {
-      Swal.fire("Error", res.message, "error");
-      return 
+      alert(res.message);
+      return;
     }
 
-    Swal.fire("Success", res.message, "success");
+    alert(res.message);
+
     router.push("/login");
   };
 

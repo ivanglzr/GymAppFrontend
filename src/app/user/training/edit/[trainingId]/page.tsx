@@ -1,7 +1,5 @@
 "use client";
 
-import Swal from "sweetalert2";
-
 import { Training } from "@/index";
 
 import TrainingForm from "@/components/TrainingForm";
@@ -22,7 +20,9 @@ export default function EditTrainingPage({
     getTraining(trainingId)
       .then(res => {
         if (!res.training) {
-          throw new Error("There isn't a training");
+          setError(true);
+          alert(res.message);
+          return;
         }
 
         const parsedTraining = {
@@ -31,8 +31,8 @@ export default function EditTrainingPage({
         };
 
         if (res.status === "error") {
-          Swal.fire("Error", res.message, "error");
           setError(true);
+          alert(res.message);
           return;
         }
 

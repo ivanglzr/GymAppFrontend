@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import Swal from "sweetalert2";
-
 import "@/css/Forms.css";
 
 import { useRouter } from "next/navigation";
@@ -31,7 +29,7 @@ export default function LogIn() {
     const error = validateLogInForm(formDataTyped);
 
     if (error) {
-      Swal.fire("Error", error, "error");
+      alert(error);
       return;
     }
 
@@ -42,11 +40,11 @@ export default function LogIn() {
         throw new Error(res.message);
       }
 
-      Swal.fire("Success", res.message, "success");
+      alert(res.message);
 
       router.push("/user/");
     } catch (err) {
-      Swal.fire("Error", `${err}`, "error");
+      alert(err);
     }
   };
 

@@ -1,7 +1,5 @@
 import "@/css/Trainings.css";
 
-import Swal from "sweetalert2";
-
 import { Training as TrainingInterface } from "../index.d";
 
 import { deleteTraining } from "@/services/training";
@@ -36,7 +34,7 @@ export default function Trainings({
             const { status, message } = await deleteTraining(`${_id}`);
 
             if (status === "error") {
-              Swal.fire("Error", message, "error");
+              alert(message);
               return;
             }
 
@@ -46,7 +44,7 @@ export default function Trainings({
               return newState;
             });
 
-            Swal.fire("Success", message, "success");
+            alert(message);
           };
 
           return (

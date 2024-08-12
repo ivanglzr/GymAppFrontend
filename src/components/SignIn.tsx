@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import Swal from "sweetalert2";
-
 import "@/css/Forms.css";
 
 import { validateSignInForm } from "@/utils/validateForm";
@@ -35,7 +33,7 @@ export default function SignIn() {
     const error = validateSignInForm(formDataTyped);
 
     if (error) {
-      Swal.fire("Error", error, "error");
+      alert(error);
       return;
     }
 
@@ -51,11 +49,11 @@ export default function SignIn() {
         throw new Error(res.message);
       }
 
-      Swal.fire("Success", "You signed in correctly", "success");
+      alert(res.message);
 
       router.push("/login");
     } catch (err) {
-      Swal.fire("Error", `${err}`, "error");
+      alert(err);
     }
   };
 

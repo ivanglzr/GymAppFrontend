@@ -4,8 +4,6 @@ import "@/css/Forms.css";
 
 import { useCallback, useMemo, useRef } from "react";
 
-import Swal from "sweetalert2";
-
 import { Exercise, Training } from "../index.d";
 
 import { useRouter } from "next/navigation";
@@ -229,7 +227,7 @@ export default function TrainingForm({
       const error = validateTrainingForm(training);
 
       if (error) {
-        Swal.fire("Error", error, "error");
+        alert(error);
         return;
       }
 
@@ -243,11 +241,11 @@ export default function TrainingForm({
           throw new Error(res.message);
         }
 
-        Swal.fire("Success", res.message, "success");
+        alert(res.message);
 
         router.push("/user");
       } catch (err) {
-        Swal.fire("Error", `${err}`, "error");
+        alert(err);
       }
     },
     [isEditTraining, trainingId, training, router]

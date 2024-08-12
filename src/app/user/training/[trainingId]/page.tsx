@@ -1,7 +1,5 @@
 "use client";
 
-import Swal from "sweetalert2";
-
 import { Exercise, Training as TrainingInterface } from "@/index";
 
 import { getTraining } from "@/services/training";
@@ -22,13 +20,7 @@ export default function TrainingPage({
       .then(res => {
         if (res.status === "error") {
           setError(true);
-          Swal.fire("Error", res.message, "error");
-          return;
-        }
-
-        if (!res.training) {
-          setError(true);
-          Swal.fire("Error", res.message, "error");
+          alert(res.message);
           return;
         }
 
