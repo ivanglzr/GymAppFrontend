@@ -1,8 +1,13 @@
-import { User } from "../index.d";
+import { BackendResponse, User } from "../index.d";
+
+import { GetUserResponse } from "@/interfaces/BackendResponses";
 
 import { ROUTES } from "./constants";
 
-export async function login(email: string, password: string) {
+export async function login(
+  email: string,
+  password: string
+): Promise<BackendResponse> {
   const petition = await fetch(ROUTES.URI + ROUTES.LOGIN, {
     method: "POST",
     headers: {
@@ -16,7 +21,7 @@ export async function login(email: string, password: string) {
   return res;
 }
 
-export async function logout() {
+export async function logout(): Promise<BackendResponse> {
   const petition = await fetch(ROUTES.URI + ROUTES.LOGOUT, {
     method: "POST",
     credentials: "include",
@@ -26,7 +31,7 @@ export async function logout() {
   return res;
 }
 
-export async function getUser() {
+export async function getUser(): Promise<GetUserResponse> {
   const petition = await fetch(ROUTES.URI + ROUTES.GET_USER, {
     method: "GET",
     credentials: "include",
@@ -36,7 +41,7 @@ export async function getUser() {
   return res;
 }
 
-export async function postUser(user: User) {
+export async function postUser(user: User): Promise<BackendResponse> {
   const petition = await fetch(ROUTES.URI + ROUTES.POST_USER, {
     method: "POST",
     headers: {

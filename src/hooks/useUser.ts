@@ -4,11 +4,8 @@ import { useEffect, useState } from "react";
 
 import { getUser } from "@/services/user";
 
-import { BackendReponse, User } from "../index.d";
-
-interface GetUserResponse extends BackendReponse {
-  user: User;
-}
+import { User } from "../index.d";
+import { GetUserResponse } from "@/interfaces/BackendResponses";
 
 export function useUser() {
   const [user, setUser] = useState<User>();

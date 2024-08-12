@@ -2,7 +2,7 @@
 
 import "@/css/Aside.css";
 
-import { BackendReponse } from "../index.d";
+import { BackendResponse } from "../index.d";
 
 import { useState } from "react";
 
@@ -28,7 +28,7 @@ export default function Aside() {
   };
 
   const logoutUser = async () => {
-    const res: BackendReponse = await logout();
+    const res: BackendResponse = await logout();
 
     if (res.status === "error") {
       alert(res.message);

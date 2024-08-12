@@ -4,7 +4,7 @@ import "@/css/Forms.css";
 
 import { useRouter } from "next/navigation";
 
-import { BackendReponse, LogInInterface } from "../index.d";
+import { BackendResponse, LogInInterface } from "../index.d";
 
 import { validateLogInForm } from "@/utils/validateForm";
 
@@ -33,7 +33,7 @@ export default function LogIn() {
     }
 
     try {
-      const res: BackendReponse = await login(
+      const res: BackendResponse = await login(
         formDataTyped.email,
         formDataTyped.password
       );

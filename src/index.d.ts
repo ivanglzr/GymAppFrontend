@@ -119,7 +119,7 @@ export interface UserExercise {
 }
 
 //? Backend Responses
-interface BackendReponse {
+interface BackendResponse {
   status: "success" | "error";
   message: string;
 }

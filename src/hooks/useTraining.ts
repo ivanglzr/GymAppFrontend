@@ -1,14 +1,12 @@
 "use client";
 
-import { Training, BackendReponse } from "../index.d";
+import { Training } from "../index.d";
+
+import { GetTrainingResponse } from "@/interfaces/BackendResponses";
 
 import { getTraining } from "@/services/training";
 
 import { useEffect, useState } from "react";
-
-interface GetTrainingReponse extends BackendReponse {
-  training: Training;
-}
 
 export function useTraining(trainingId: string) {
   const [training, setTraining] = useState<Training>();
@@ -17,7 +15,7 @@ export function useTraining(trainingId: string) {
 
   useEffect(() => {
     getTraining(trainingId)
-      .then((res: GetTrainingReponse) => {
+      .then((res: GetTrainingResponse) => {
         if (res.status === "error") {
           setError(true);
           return;

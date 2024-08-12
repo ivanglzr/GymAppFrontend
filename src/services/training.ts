@@ -1,8 +1,15 @@
+import { BackendResponse, Training } from "../index.d";
+
+import {
+  GetTrainingResponse,
+  GetTrainingsResponse,
+} from "@/interfaces/BackendResponses";
+
 import { ROUTES } from "./constants";
 
-import { Training } from "../index.d";
-
-export async function getTraining(trainingId: string) {
+export async function getTraining(
+  trainingId: string
+): Promise<GetTrainingResponse> {
   const petition = await fetch(ROUTES.URI + ROUTES.GET_TRAINING(trainingId), {
     method: "GET",
     credentials: "include",
@@ -12,7 +19,7 @@ export async function getTraining(trainingId: string) {
   return res;
 }
 
-export async function getTrainings() {
+export async function getTrainings(): Promise<GetTrainingsResponse> {
   const petition = await fetch(ROUTES.URI + ROUTES.GET_TRAININGS, {
     method: "GET",
     credentials: "include",
@@ -22,7 +29,9 @@ export async function getTrainings() {
   return res;
 }
 
-export async function postTraining(training: Training) {
+export async function postTraining(
+  training: Training
+): Promise<BackendResponse> {
   const petition = await fetch(ROUTES.URI + ROUTES.POST_TRAINING, {
     method: "POST",
     credentials: "include",
@@ -36,7 +45,10 @@ export async function postTraining(training: Training) {
   return res;
 }
 
-export async function putTraining(trainingId: string, training: Training) {
+export async function putTraining(
+  trainingId: string,
+  training: Training
+): Promise<BackendResponse> {
   const petition = await fetch(ROUTES.URI + ROUTES.PUT_TRAINING(trainingId), {
     method: "PUT",
     credentials: "include",
@@ -50,7 +62,9 @@ export async function putTraining(trainingId: string, training: Training) {
   return res;
 }
 
-export async function deleteTraining(trainingId: string) {
+export async function deleteTraining(
+  trainingId: string
+): Promise<BackendResponse> {
   const petition = await fetch(
     ROUTES.URI + ROUTES.DELETE_TRAINING(trainingId),
     {

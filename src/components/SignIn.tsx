@@ -4,7 +4,7 @@ import "@/css/Forms.css";
 
 import { validateSignInForm } from "@/utils/validateForm";
 
-import { BackendReponse, SignInInterface, User } from "../index.d";
+import { BackendResponse, SignInInterface, User } from "../index.d";
 
 import { postUser } from "@/services/user";
 
@@ -41,7 +41,7 @@ export default function SignIn() {
         trainings: [],
       };
 
-      const res: BackendReponse = await postUser(user);
+      const res: BackendResponse = await postUser(user);
 
       if (res.status === "error") {
         throw new Error(res.message);

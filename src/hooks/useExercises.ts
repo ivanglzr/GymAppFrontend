@@ -1,14 +1,11 @@
 "use client";
 
-import { BackendReponse, UserExercise } from "../index.d";
+import { UserExercise } from "../index.d";
+import { GetUserExercisesResponse } from "@/interfaces/BackendResponses";
 
 import { useEffect, useState } from "react";
 
 import { getUserExercises } from "@/services/exercise";
-
-interface GetUserExercisesReponse extends BackendReponse {
-  exercises: Array<UserExercise>;
-}
 
 export function useExercises() {
   const [exercises, setExercises] = useState<Array<UserExercise>>();
@@ -17,7 +14,7 @@ export function useExercises() {
 
   useEffect(() => {
     getUserExercises()
-      .then((res: GetUserExercisesReponse) => {
+      .then((res: GetUserExercisesResponse) => {
         if (res.status === "error") {
           setError(true);
         }

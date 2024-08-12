@@ -1,14 +1,11 @@
 "use client";
 
-import { BackendReponse, Training } from "../index.d";
+import { Training } from "../index.d";
+import { GetTrainingsResponse } from "@/interfaces/BackendResponses";
 
 import { getTrainings } from "@/services/training";
 
 import { useEffect, useState } from "react";
-
-interface GetTrainingsResponse extends BackendReponse {
-  trainings: Array<Training>;
-}
 
 export function useTrainings() {
   const [trainings, setTrainings] = useState<Array<Training>>([]);
