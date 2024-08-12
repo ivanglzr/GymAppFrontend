@@ -1,49 +1,42 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
-import { getUserExercises } from "@/services/exercise";
-
-import { UserExercise } from "@/index";
+import { useExercises } from "@/hooks/useExercises";
 
 const generateRandomKey = () => crypto.randomUUID();
 
 export default function UserExercisesPage() {
-  const [exercises, setExercises] = useState<UserExercise[] | undefined>(
-    undefined
-  );
+  const { exercises, error, loading } = useExercises();
 
-  useEffect(() => {
-    getUserExercises().then(res => {
-      if (res.status === "error") {
-        throw new Error("Couldn't get exercises");
-      }
-
-      setExercises(res.exercises);
-    });
-  }, []);
-
-  const exercisesKeys = useRef<Map<number, string>>(new Map());
+  const exercisesKeys = useRef<Array<string>>([]);
 
   const getExerciseKey = (exerciseIndex: number) => {
-    if (!exercisesKeys.current.has(exerciseIndex)) {
-      exercisesKeys.current.set(exerciseIndex, generateRandomKey());
+    if (!exercisesKeys.current[exerciseIndex]) {
+      exercisesKeys.current[exerciseIndex] = generateRandomKey();
     }
-    return exercisesKeys.current.get(exerciseIndex);
+    return exercisesKeys.current[exerciseIndex];
   };
+
+  if (error) {
+    return <h2>An error occurred</h2>;
+  }
+
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
 
   //TODO: Exercises UI, create Exercises component and Exercise component
   return (
     <>
-      {exercises &&
-        exercises.map((e, index) => (
-          <div key={getExerciseKey(index)}>
-            <h2>{e.name}</h2>
-            <p>{e.description}</p>
-            <span>{e.muscle}</span> <br />
-            <span>{e.equipment}</span>
-          </div>
-        ))}
+      {exercises?.map((e, index) => (
+        <div key={getExerciseKey(index)}>
+          <h2>{e.name}</h2>
+          <p>{e.description}</p>
+          <span>{e.muscle}</span> <br />
+          <span>{e.equipment}</span>
+        </div>
+      ))}
     </>
   );
 }
