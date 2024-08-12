@@ -26,7 +26,7 @@ export function useTraining(trainingId: string) {
         setTraining(res.training);
       })
       .catch(_ => setError(true));
-  });
+  }, [trainingId]);
 
   return {
     training,
