@@ -1,14 +1,12 @@
 "use client";
 
-import { Training } from "../index.d";
+import { BackendReponse, Training } from "../index.d";
 
 import { getTrainings } from "@/services/training";
 
 import { useEffect, useState } from "react";
 
-interface GetTrainingsResponse {
-  status: "error" | "success";
-  message: string;
+interface GetTrainingsResponse extends BackendReponse {
   trainings: Array<Training>;
 }
 

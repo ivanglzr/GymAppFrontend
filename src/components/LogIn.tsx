@@ -1,16 +1,15 @@
 "use client";
 
-import React from "react";
-
 import "@/css/Forms.css";
 
 import { useRouter } from "next/navigation";
 
-import { LogInInterface } from "../index.d";
+import { BackendReponse, LogInInterface } from "../index.d";
 
 import { validateLogInForm } from "@/utils/validateForm";
 
 import { login } from "@/services/user";
+
 import Link from "next/link";
 
 export default function LogIn() {
@@ -34,7 +33,10 @@ export default function LogIn() {
     }
 
     try {
-      const res = await login(formDataTyped.email, formDataTyped.password);
+      const res: BackendReponse = await login(
+        formDataTyped.email,
+        formDataTyped.password
+      );
 
       if (res.status === "error") {
         throw new Error(res.message);

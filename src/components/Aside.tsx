@@ -2,6 +2,8 @@
 
 import "@/css/Aside.css";
 
+import { BackendReponse } from "../index.d";
+
 import { useState } from "react";
 
 import Link from "next/link";
@@ -26,7 +28,7 @@ export default function Aside() {
   };
 
   const logoutUser = async () => {
-    const res = await logout();
+    const res: BackendReponse = await logout();
 
     if (res.status === "error") {
       alert(res.message);

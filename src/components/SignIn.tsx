@@ -1,12 +1,10 @@
 "use client";
 
-import React from "react";
-
 import "@/css/Forms.css";
 
 import { validateSignInForm } from "@/utils/validateForm";
 
-import { SignInInterface, User } from "../index.d";
+import { BackendReponse, SignInInterface, User } from "../index.d";
 
 import { postUser } from "@/services/user";
 
@@ -43,7 +41,7 @@ export default function SignIn() {
         trainings: [],
       };
 
-      const res = await postUser(user);
+      const res: BackendReponse = await postUser(user);
 
       if (res.status === "error") {
         throw new Error(res.message);

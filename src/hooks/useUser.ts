@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 
 import { getUser } from "@/services/user";
 
-import { User } from "../index.d";
+import { BackendReponse, User } from "../index.d";
+
+interface GetUserResponse extends BackendReponse {
+  user: User;
+}
 
 export function useUser() {
   const [user, setUser] = useState<User>();
@@ -13,7 +17,7 @@ export function useUser() {
 
   useEffect(() => {
     getUser()
-      .then(res => {
+      .then((res: GetUserResponse) => {
         if (res.status === "error") {
           setError(true);
           return;

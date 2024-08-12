@@ -4,7 +4,7 @@ import "@/css/Forms.css";
 
 import { useCallback, useMemo, useRef } from "react";
 
-import { Exercise, Training } from "../index.d";
+import { BackendReponse, Exercise, Training } from "../index.d";
 
 import { useRouter } from "next/navigation";
 
@@ -232,10 +232,10 @@ export default function TrainingForm({
       }
 
       try {
-        let res;
+        let res: BackendReponse;
 
         if (isEditTraining) res = await putTraining(trainingId, training);
-        else if (!isEditTraining) res = await postTraining(training);
+        else res = await postTraining(training);
 
         if (res.status === "error") {
           throw new Error(res.message);
