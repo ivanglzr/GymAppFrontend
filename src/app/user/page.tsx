@@ -1,4 +1,6 @@
-import { Training } from "@/index.d";
+"use client";
+
+import { Training } from "@/index";
 
 import Aside from "@/components/Aside";
 import Trainings from "@/components/Trainings";
@@ -21,6 +23,9 @@ export default function UserPage() {
     0
   );
 
+  if (loading) return <h2>Cargando...</h2>;
+  if (error) return <h2>Fetching trainings failed</h2>;
+
   return (
     <div
       style={{
@@ -29,19 +34,15 @@ export default function UserPage() {
         gridTemplateColumns: "80% 15%",
       }}
     >
-      {!error && !loading && (
-        <>
-          <Aside />
-          <Trainings setTrainings={setTrainings} trainings={trainings} />
-          <UserAside
-            name={userName ?? ""}
-            numberOfTrainings={numberOfTrainings}
-            totalTrainingsDuration={totalTrainingsDuration}
-          />
-        </>
-      )}
-      {loading && <h2>Cargando...</h2>}
-      {error && <h2>Fetching trainings failed</h2>}
+      <>
+        <Aside />
+        <Trainings setTrainings={setTrainings} trainings={trainings} />
+        <UserAside
+          name={userName ?? ""}
+          numberOfTrainings={numberOfTrainings}
+          totalTrainingsDuration={totalTrainingsDuration}
+        />
+      </>
     </div>
   );
 }
