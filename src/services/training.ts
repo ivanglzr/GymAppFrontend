@@ -6,7 +6,16 @@ export async function getTraining(trainingId: string) {
   const petition = await fetch(ROUTES.URI + ROUTES.GET_TRAINING(trainingId), {
     method: "GET",
     credentials: "include",
-    cache: "no-store",
+  });
+  const res = await petition.json();
+
+  return res;
+}
+
+export async function getTrainings() {
+  const petition = await fetch(ROUTES.URI + ROUTES.GET_TRAININGS, {
+    method: "GET",
+    credentials: "include",
   });
   const res = await petition.json();
 
