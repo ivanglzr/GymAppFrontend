@@ -15,3 +15,7 @@ export interface GetTrainingsResponse extends BackendResponse {
 export interface GetUserExercisesResponse extends BackendResponse {
   exercises: Array<UserExercise>;
 }
+
+export interface GetExerciseByIdResponse extends BackendResponse {
+  exercise: UserExercise;
+}
