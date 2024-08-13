@@ -114,9 +114,10 @@ export interface UserExercise {
   _id?: string;
   name: string;
   description?: string;
+  image: string;
   equipment: ExerciseEquipments;
   muscle: MuscularGroups;
-  userId?: string;
+  userId: string;
 }
 
 //? Backend Responses
