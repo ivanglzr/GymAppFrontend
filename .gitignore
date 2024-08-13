@@ -3,6 +3,8 @@
 package-lock.json
 pnpm-lock.yaml
 
+/web
+
 # dependencies
 /node_modules
 /.pnp
