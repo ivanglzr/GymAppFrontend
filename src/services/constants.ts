@@ -12,6 +12,7 @@ export const ROUTES = {
   POST_EXERCISE: "/exercise/",
   PUT_TRAINING: (trainingId: string) => `/user/training/${trainingId}`,
   PUT_EXERCISE: (exerciseId: string) => `/exercise/${exerciseId}`,
+  UPLOAD_IMAGE: (exerciseId: string) => `/exercise/${exerciseId}/image`,
   DELETE_TRAINING: (trainingId: string) => `/user/training/${trainingId}`,
   DELETE_EXERCISE: (exerciseId: string) => `/exercise/${exerciseId}`,
 };
