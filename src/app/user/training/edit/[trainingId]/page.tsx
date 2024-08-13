@@ -11,14 +11,14 @@ export default function EditTrainingPage({
 }) {
   const { training, error, loading } = useTraining(trainingId);
 
-  if (loading) return <h2>Cargando...</h2>;
+  if (loading) return <h2>Loading...</h2>;
 
   if (error) {
     return <h2>Couldn&apos;t get training</h2>;
   }
 
   if (!training) {
-    return <h2>Cargando...</h2>;
+    return <h2>Loading...</h2>;
   }
 
   const parsedTraining = {

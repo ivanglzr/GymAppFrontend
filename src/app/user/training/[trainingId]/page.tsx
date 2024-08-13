@@ -14,7 +14,7 @@ export default function TrainingPage({
   }, 0);
 
   if (error) return <h2>Error ocurred while getting the training</h2>;
-  if (loading) return <h2>Cargando...</h2>;
+  if (loading) return <h2>Loading...</h2>;
 
   return (
     <>
