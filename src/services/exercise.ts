@@ -31,17 +31,6 @@ export async function getExerciseById(
   return res;
 }
 
-export async function getImage(imageName: string): Promise<string> {
-  const petition = await fetch(ROUTES.URI + ROUTES.GET_IMAGE(imageName), {
-    method: "GET",
-    credentials: "include",
-  });
-  const blob = await petition.blob();
-
-  const imageUrl = URL.createObjectURL(blob);
-  return imageUrl;
-}
-
 export async function postExercise(
   exercise: UserExercise
 ): Promise<BackendResponse> {
