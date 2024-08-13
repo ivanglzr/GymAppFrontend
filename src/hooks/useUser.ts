@@ -7,8 +7,10 @@ import { getUser } from "@/services/user";
 import { User } from "../index.d";
 import { GetUserResponse } from "@/interfaces/BackendResponses";
 
+type UserResponse = Omit<User, "_id" | "email" | "password" | "trainings">;
+
 export function useUser() {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<UserResponse>();
   const [error, setError] = useState<boolean>(false);
   const loading = !error && !user;
 
@@ -24,8 +26,6 @@ export function useUser() {
       })
       .catch(_ => setError(true));
   }, []);
-
-  console.log("render");
 
   return {
     user,
