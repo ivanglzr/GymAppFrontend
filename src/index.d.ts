@@ -111,6 +111,7 @@ export const muscularGroups: MuscularGroups[] = [
 ];
 
 export interface UserExercise {
+  _id?: string;
   name: string;
   description?: string;
   equipment: ExerciseEquipments;
