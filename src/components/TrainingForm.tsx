@@ -224,18 +224,17 @@ export default function TrainingForm({
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const error = validateTrainingForm(training);
+      const validationError = validateTrainingForm(training);
 
-      if (error) {
-        alert(error);
+      if (validationError) {
+        alert(validationError);
         return;
       }
 
       try {
-        let res: BackendResponse;
-
-        if (isEditTraining) res = await putTraining(trainingId, training);
-        else res = await postTraining(training);
+        const res: BackendResponse = isEditTraining
+          ? await putTraining(trainingId, training)
+          : await postTraining(training);
 
         if (res.status === "error") {
           throw new Error(res.message);
