@@ -21,7 +21,6 @@ export default function UserExercisesPage() {
   return (
     <Container
       style={{
-        minHeight: "100vh",
         display: "grid",
         gridTemplateColumns: "100%",
       }}

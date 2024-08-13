@@ -33,7 +33,6 @@ export default function UserPage() {
   return (
     <Container
       style={{
-        minHeight: "100vh",
         display: "grid",
         gridTemplateColumns: "80% 15%",
       }}
