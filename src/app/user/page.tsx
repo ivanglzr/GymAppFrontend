@@ -2,6 +2,7 @@
 
 import { Training } from "@/index";
 
+import Container from "@/components/Container";
 import Aside from "@/components/Aside";
 import Trainings from "@/components/Trainings";
 import UserAside from "@/components/UserAside";
@@ -10,20 +11,6 @@ import { useUser } from "@/hooks/useUser";
 import { useTrainings } from "@/hooks/useTrainings";
 
 import { useMemo } from "react";
-
-function Container({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "grid",
-        gridTemplateColumns: "80% 15%",
-      }}
-    >
-      {children}
-    </div>
-  );
-}
 
 export default function UserPage() {
   const { user, loading, error } = useUser();
@@ -44,7 +31,13 @@ export default function UserPage() {
   if (error) return <h2>Fetching trainings failed</h2>;
 
   return (
-    <Container>
+    <Container
+      style={{
+        minHeight: "100vh",
+        display: "grid",
+        gridTemplateColumns: "80% 15%",
+      }}
+    >
       <Aside />
       <Trainings setTrainings={setTrainings} trainings={trainings} />
       <UserAside
