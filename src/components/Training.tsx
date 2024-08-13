@@ -56,8 +56,9 @@ export default function Training({
         <ul className="exercises-list">
           {exercises.map(exercise => (
             <li className="exercise-name" key={exercise._id}>
-              {exercise.sets.length}{" "}
-              {exercise.sets.length === 1 ? "set" : "sets"} {exercise.name}
+              {`${exercise.sets.length} ${
+                exercise.sets.length === 1 ? "set" : "sets"
+              } ${exercise.name}`}
             </li>
           ))}
         </ul>
