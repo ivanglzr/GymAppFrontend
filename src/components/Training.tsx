@@ -43,11 +43,11 @@ export default function Training({
       </header>
       <div className="training-info">
         <div className="duration-div">
-          <span className="duration-div-title subtitle">Duration</span>
+          <h3 className="duration-div-title subtitle">Duration</h3>
           <span className="duration-div-info">{duration} min</span>
         </div>
         <div className="sets-div">
-          <span className="sets-div-title subtitle">Sets</span>
+          <h3 className="sets-div-title subtitle">Sets</h3>
           <span className="sets-div-info">{sets.toString()}</span>
         </div>
       </div>
