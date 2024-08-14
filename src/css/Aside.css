@@ -8,7 +8,8 @@
 
   background: var(--second-color);
 
-  padding: 20px 15px;
+  padding-top: 10px;
+  padding-bottom: 20px;
 
   text-align: center;
 
@@ -21,6 +22,10 @@
     & a,
     & button {
       margin: 20px auto;
+
+      & i {
+        font-size: 2.5vw;
+      }
 
       &:hover > i {
         opacity: 0.7;
