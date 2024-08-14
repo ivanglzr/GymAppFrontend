@@ -16,7 +16,7 @@ export default function Trainings({
   setTrainings: (value: SetStateAction<TrainingInterface[]>) => void;
 }) {
   return (
-    <main id="main">
+    <main className="trainings-container">
       <h1>Home</h1>
       <section className="trainings-section">
         {trainings.map(({ _id, date, duration, exercises }) => {
