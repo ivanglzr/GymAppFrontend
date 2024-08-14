@@ -1,6 +1,13 @@
 #main {
-  padding: 10px 0 10px 40px;
+  display: inline-block;
+
+  width: 80%;
+
   margin-left: 5%;
+  margin-right: 15%;
+
+  padding: 20px;
+  padding-right: 40px;
 
   & h1 {
     font-size: 40px;

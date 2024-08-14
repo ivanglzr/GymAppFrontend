@@ -33,17 +33,16 @@ export default function UserPage() {
   return (
     <Container
       style={{
-        display: "grid",
-        gridTemplateColumns: "80% 15%",
+        position: "relative"
       }}
     >
       <Aside />
-      <Trainings setTrainings={setTrainings} trainings={trainings} />
       <UserAside
         name={userName ?? ""}
         numberOfTrainings={numberOfTrainings}
         totalTrainingsDuration={totalTrainingsDuration}
       />
+      <Trainings setTrainings={setTrainings} trainings={trainings} />
     </Container>
   );
 }
