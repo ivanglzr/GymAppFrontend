@@ -1,6 +1,6 @@
 #user-aside {
   width: 15%;
-  height: 95%;
+  height: calc(100% - 40px);
 
   position: fixed;
   top: 0;
