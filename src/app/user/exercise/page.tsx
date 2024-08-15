@@ -13,11 +13,11 @@ export default function UserExercisesPage() {
     return <h2>An error occurred</h2>;
   }
 
+  //TODO: if user doesn't have any exercises loading lasts forever. Fix it
   if (loading) {
     return <h2>Loading...</h2>;
   }
 
-  //TODO: Exercises UI, create Exercises component and Exercise component
   return (
     <Container
       style={{
