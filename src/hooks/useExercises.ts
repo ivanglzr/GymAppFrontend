@@ -19,6 +19,10 @@ export function useExercises() {
           setError(true);
         }
 
+        if (!res.exercises) {
+          setExercises([]);
+        }
+
         setExercises(res.exercises);
       })
       .catch(_ => setError(true));

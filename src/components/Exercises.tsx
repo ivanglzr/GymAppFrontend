@@ -9,10 +9,10 @@ export default function Exercises({
   exercises: Array<UserExercise>;
 }) {
   return (
-    <main id="main">
+    <main className="exercises-container">
       <h1>Exercises</h1>
-      {exercises.map(exercise => (
-        <Exercise exercise={exercise} key={exercise._id} />
+      {exercises.map((exercise: UserExercise) => (
+        <Exercise key={exercise._id} exercise={exercise} />
       ))}
     </main>
   );

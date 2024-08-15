@@ -21,8 +21,7 @@ export default function UserExercisesPage() {
   return (
     <Container
       style={{
-        display: "grid",
-        gridTemplateColumns: "100%",
+        position: "relative",
       }}
     >
       <Aside />
