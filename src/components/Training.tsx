@@ -33,10 +33,15 @@ export default function Training({
           <button
             className="btn-icon"
             onClick={() => router.push(`/user/training/edit/${id}`)}
+            aria-label="Redirect user to edit training page"
           >
             <i className="fa-solid fa-pen-to-square fa-xl"></i>
           </button>
-          <button className="btn-icon" onClick={handleDelete}>
+          <button
+            className="btn-icon"
+            onClick={handleDelete}
+            aria-label="Delete training button"
+          >
             <i className="fa-solid fa-trash fa-xl"></i>
           </button>
         </div>

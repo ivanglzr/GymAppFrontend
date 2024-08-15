@@ -43,22 +43,39 @@ export default function Aside() {
   return (
     <aside id="navigation-aside">
       <nav className="aside-nav">
-        <Link href="/user">
+        <Link href="/user" aria-label="Navigate to user's page">
           <i className="fa-solid fa-house fa-2xl"></i>
         </Link>
-        <Link href="/user/training/create">
+        <Link
+          href="/user/training/create"
+          aria-label="Navigate to create training page"
+        >
           <i className="fa-solid fa-clipboard-list fa-2xl"></i>
         </Link>
-        <Link href="/user/exercise">
+        <Link
+          href="/user/exercise"
+          aria-label="Navigate to user's exercises page"
+        >
           <i className="fa-solid fa-dumbbell fa-2xl"></i>
         </Link>
-        <Link href="/user/settings">
+        <Link
+          href="/user/settings"
+          aria-label="Navigate to user's settings page"
+        >
           <i className="fa-solid fa-gear fa-2xl"></i>
         </Link>
-        <button className="logout-btn" onClick={logoutUser}>
+        <button
+          className="logout-btn"
+          onClick={logoutUser}
+          aria-label="Logout user and redirect to login"
+        >
           <i className="fa-solid fa-right-from-bracket fa-2xl"></i>
         </button>
-        <button className="toggle-theme-btn" onClick={changeTheme}>
+        <button
+          className="toggle-theme-btn"
+          onClick={changeTheme}
+          aria-label="Toggle page's color theme from dark to light or light to dark"
+        >
           <i className={`fa-solid ${toggleThemeIconClass} fa-2xl`}></i>
         </button>
       </nav>
