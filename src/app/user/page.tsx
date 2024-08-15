@@ -18,7 +18,7 @@ export default function UserPage() {
 
   const userName = user?.name;
 
-  const numberOfTrainings = trainings.length;
+  const numberOfTrainings = useMemo(() => trainings.length, [trainings]);
   const totalTrainingsDuration = useMemo(
     () =>
       trainings.reduce((totalDuration: number, training: Training) => {
@@ -33,7 +33,7 @@ export default function UserPage() {
   return (
     <Container
       style={{
-        position: "relative"
+        position: "relative",
       }}
     >
       <Aside />
