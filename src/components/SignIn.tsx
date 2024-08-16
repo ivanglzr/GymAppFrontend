@@ -43,10 +43,6 @@ export default function SignIn() {
 
       const res: BackendResponse = await postUser(user);
 
-      if (res.status === "error") {
-        throw new Error(res.message);
-      }
-
       alert(res.message);
 
       router.push("/login");
