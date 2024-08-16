@@ -19,3 +19,7 @@ export interface GetUserExercisesResponse extends BackendResponse {
 export interface GetExerciseByIdResponse extends BackendResponse {
   exercise: UserExercise;
 }
+
+export interface PostExerciseResponse extends BackendResponse {
+  id: string;
+}
