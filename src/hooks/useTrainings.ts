@@ -15,12 +15,7 @@ export function useTrainings() {
   useEffect(() => {
     getTrainings()
       .then((res: GetTrainingsResponse) => {
-        if (res.status === "error") {
-          setError(true);
-          return;
-        }
-
-        const trainingsParsed = res.trainings.map(training => {
+        const trainingsParsed = res.trainings.map((training) => {
           return {
             ...training,
             date: new Date(training.date),
@@ -29,7 +24,7 @@ export function useTrainings() {
 
         setTrainings(trainingsParsed);
       })
-      .catch(_ => setError(true));
+      .catch((_) => setError(true));
   }, []);
 
   return {

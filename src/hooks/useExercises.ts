@@ -15,17 +15,9 @@ export function useExercises() {
   useEffect(() => {
     getUserExercises()
       .then((res: GetUserExercisesResponse) => {
-        if (res.status === "error") {
-          setError(true);
-        }
-
-        if (!res.exercises) {
-          setExercises([]);
-        }
-
         setExercises(res.exercises);
       })
-      .catch(_ => setError(true));
+      .catch((_) => setError(true));
   }, []);
 
   return { exercises, setExercises, error, loading };

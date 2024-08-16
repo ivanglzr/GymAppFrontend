@@ -17,14 +17,9 @@ export function useUser() {
   useEffect(() => {
     getUser()
       .then((res: GetUserResponse) => {
-        if (res.status === "error") {
-          setError(true);
-          return;
-        }
-
         setUser(res.user);
       })
-      .catch(_ => setError(true));
+      .catch((_) => setError(true));
   }, []);
 
   return {

@@ -11,15 +11,10 @@ export function useExercise(exerciseId: string) {
 
   useEffect(() => {
     getExerciseById(exerciseId)
-      .then(res => {
-        if (res.status === "error") {
-          setError(true);
-          return;
-        }
-
+      .then((res) => {
         setExercise(res.exercise);
       })
-      .catch(_ => setError(true));
+      .catch((_) => setError(true));
   }, [exerciseId]);
 
   return {

@@ -16,14 +16,9 @@ export function useTraining(trainingId: string) {
   useEffect(() => {
     getTraining(trainingId)
       .then((res: GetTrainingResponse) => {
-        if (res.status === "error") {
-          setError(true);
-          return;
-        }
-
         setTraining(res.training);
       })
-      .catch(_ => setError(true));
+      .catch((_) => setError(true));
   }, [trainingId]);
 
   return {
