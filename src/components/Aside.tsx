@@ -28,16 +28,15 @@ export default function Aside() {
   };
 
   const logoutUser = async () => {
-    const res: BackendResponse = await logout();
+    try {
+      const res: BackendResponse = await logout();
 
-    if (res.status === "error") {
       alert(res.message);
-      return;
+
+      router.push("/login");
+    } catch (error) {
+      alert(error);
     }
-
-    alert(res.message);
-
-    router.push("/login");
   };
 
   return (

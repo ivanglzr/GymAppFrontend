@@ -38,10 +38,6 @@ export default function LogIn() {
         formDataTyped.password
       );
 
-      if (res.status === "error") {
-        throw new Error(res.message);
-      }
-
       alert(res.message);
 
       router.push("/user/");
