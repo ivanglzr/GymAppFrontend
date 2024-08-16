@@ -2,7 +2,7 @@
   width: 95%;
   margin-left: 5%;
 
-  padding: 10px 40px;
+  padding: 10px 20px;
 
   & h1 {
     font-size: 40px;
@@ -21,25 +21,31 @@
 
     & .exercise-img {
       width: 300px;
-      max-height: 200px;
+      height: 200px;
       object-fit: cover;
 
       border-radius: var(--border-radius);
     }
 
     & .exercise-info {
+      max-width: calc(100% - 300px - 20px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
 
       & .exercise-info-description {
         display: -webkit-box;
-        -webkit-line-clamp: 5; /* Número máximo de líneas */
+        -webkit-line-clamp: 5;
         line-clamp: 5;
         -webkit-box-orient: vertical;
-        overflow: hidden;
+        overflow-wrap: break-word;
+        overflow: auto;
         text-overflow: ellipsis;
         margin-bottom: 10px;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
       }
 
       & .exercise-data {
