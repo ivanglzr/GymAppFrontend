@@ -27,20 +27,19 @@ export default function Trainings({
     }, 0);
 
     const handleDelete = async () => {
-      const { status, message } = await deleteTraining(`${_id}`);
+      try {
+        const { message } = await deleteTraining(`${_id}`);
 
-      if (status === "error") {
+        setTrainings((prevState: TrainingInterface[]) => {
+          const newState = prevState.filter((e) => e._id?.toString() !== _id);
+
+          return newState;
+        });
+
         alert(message);
-        return;
+      } catch (error) {
+        alert(error);
       }
-
-      setTrainings((prevState: TrainingInterface[]) => {
-        const newState = prevState.filter(e => e._id?.toString() !== _id);
-
-        return newState;
-      });
-
-      alert(message);
     };
 
     return (
