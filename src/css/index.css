@@ -2,8 +2,9 @@
   --first-color: #313131;
   --second-color: #292929;
   --third-color: #4257de;
-  --border-radius: 20px;
   --font-color: #ffffff;
+  --border-radius: 20px;
+  --gap: 20px;
   --input-border: none;
 }
 
