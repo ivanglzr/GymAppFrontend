@@ -10,7 +10,6 @@ import {
   UserExercise,
   ExerciseEquipments,
   MuscularGroups,
-  BackendResponse,
 } from "../index.d";
 
 import { validateExerciseForm } from "@/utils/validateForm";
@@ -34,6 +33,26 @@ export default function ExerciseForm({
 }) {
   const [image, setImage] = useState<File | undefined>(undefined);
 
+  const postImage = useCallback(
+    async (id: string) => {
+      if (!image) return;
+
+      try {
+        const imageFormData = new FormData();
+        imageFormData.set("file0", image);
+
+        const imageRes = await uploadImage(id, imageFormData);
+
+        if (imageRes.status === "error") throw new Error(imageRes.message);
+
+        return imageRes;
+      } catch (error) {
+        throw new Error(error as string);
+      }
+    },
+    [image]
+  );
+
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -44,7 +63,6 @@ export default function ExerciseForm({
       const equipment = data.equipment as ExerciseEquipments;
       const muscle = data.muscle as MuscularGroups;
 
-      // Validación de equipamiento y grupo muscular
       if (
         !exerciseEquipments.includes(equipment) ||
         !muscularGroups.includes(muscle)
@@ -60,7 +78,6 @@ export default function ExerciseForm({
         muscle,
       };
 
-      // Validación del formulario
       const validationError = validateExerciseForm(exerciseData);
       if (validationError) {
         alert(validationError);
@@ -68,32 +85,31 @@ export default function ExerciseForm({
       }
 
       try {
-        // Envío del ejercicio
-        const res = isEditExercise
-          ? await putExercise(exerciseId, exerciseData)
-          : await postExercise(exerciseData);
+        let id = exerciseId;
 
-        if (res.status === "error") throw new Error(res.message);
-
-        // Subida de imagen si está presente
-        if (image) {
-          const imageFormData = new FormData();
-          imageFormData.append("file0", image);
-
-          const imageRes = await uploadImage(exerciseId, imageFormData);
-          if (imageRes.status === "error") throw new Error(imageRes.message);
-
-          alert(imageRes.message);
+        if (isEditExercise) {
+          const res = await putExercise(exerciseId, exerciseData);
+          if (res.status === "error") throw new Error(res.message);
         } else {
-          alert(
-            `Exercise ${isEditExercise ? "edited" : "created"} successfully`
-          );
+          const res = await postExercise(exerciseData);
+          if (res.status === "error") throw new Error(res.message);
+
+          id = res.id;
         }
+
+        if (!image) {
+          alert("Exercise created");
+          return;
+        }
+
+        const imageRes = await postImage(id);
+
+        alert(imageRes?.message);
       } catch (err) {
         alert(err);
       }
     },
-    [exerciseId, image, isEditExercise]
+    [exerciseId, image, isEditExercise, postImage]
   );
 
   const handleImage = useCallback(
@@ -105,7 +121,6 @@ export default function ExerciseForm({
 
       const file = event.currentTarget.files[0];
 
-      // Validación del tipo de archivo
       const validTypes = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
       if (!validTypes.includes(file.type)) {
         alert("Type isn't valid");
@@ -114,7 +129,7 @@ export default function ExerciseForm({
 
       setImage(file);
     },
-    [setImage]
+    []
   );
 
   return (
@@ -137,7 +152,7 @@ export default function ExerciseForm({
         <div className="select-group">
           <label htmlFor="muscle">Muscle</label>
           <select name="muscle" id="muscle" defaultValue={exercise.muscle}>
-            {muscularGroups.map(group => (
+            {muscularGroups.map((group) => (
               <option key={group} value={group}>
                 {group}
               </option>
@@ -151,7 +166,7 @@ export default function ExerciseForm({
             id="equipment"
             defaultValue={exercise.equipment}
           >
-            {exerciseEquipments.map(group => (
+            {exerciseEquipments.map((group) => (
               <option key={group} value={group}>
                 {group}
               </option>
@@ -166,7 +181,7 @@ export default function ExerciseForm({
           name="image"
           id="image"
           accept="image/png, image/jpeg, image/jpg, image/gif"
-          onChange={event => handleImage(event)}
+          onChange={(event) => handleImage(event)}
         />
       </div>
 
