@@ -23,11 +23,11 @@
 
   font-size: 20px;
 
+  transition: all 0.2s linear;
+
   &:hover {
     color: #ff0000;
     opacity: 0.8;
-
-    transition: all 0.2s linear;
   }
 }
 
@@ -42,7 +42,7 @@ body {
 
   color: var(--font-color);
 
-  transition: 0.2s all linear;
+  transition: 0.2s background linear;
 
   & #container {
     min-height: 100vh;
