@@ -7,6 +7,9 @@ import {
   PostExerciseResponse,
 } from "@/interfaces/BackendResponses";
 
+import { HttpError } from "@/errors/HttpError";
+import { HttpStatusError } from "@/errors/HttpStatusError";
+
 export async function getUserExercises(): Promise<GetUserExercisesResponse> {
   try {
     const petition = await fetch(ROUTES.URI + ROUTES.GET_USER_EXERCISES, {
@@ -14,17 +17,15 @@ export async function getUserExercises(): Promise<GetUserExercisesResponse> {
       credentials: "include",
     });
 
-    if (!petition.ok) {
-      throw new Error(`HTTP error! status: ${petition.status}`);
-    }
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: GetUserExercisesResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to get exercise: ${error}`);
+    throw error;
   }
 }
 
@@ -40,17 +41,15 @@ export async function getExerciseById(
       }
     );
 
-    if (!petition.ok) {
-      throw new Error(`HTTP Error! Status: ${petition.status}`);
-    }
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: GetExerciseByIdResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to get exercise: ${error}`);
+    throw error;
   }
 }
 
@@ -67,15 +66,15 @@ export async function postExercise(
       body: JSON.stringify(exercise),
     });
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: PostExerciseResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to post exercise: ${error}`);
+    throw error;
   }
 }
 
@@ -93,15 +92,15 @@ export async function putExercise(
       body: JSON.stringify(exercise),
     });
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: BackendResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to put exercise: ${error}`);
+    throw error;
   }
 }
 
@@ -116,15 +115,15 @@ export async function uploadImage(
       body: imageFormData,
     });
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: BackendResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to upload image: ${error}`);
+    throw error;
   }
 }
 
@@ -140,14 +139,14 @@ export async function deleteExercise(
       }
     );
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: BackendResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to delete exercise: ${error}`);
+    throw error;
   }
 }

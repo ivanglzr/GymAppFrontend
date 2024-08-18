@@ -1,8 +1,10 @@
-import { BackendResponse, User } from "../index.d";
+import { ROUTES } from "./constants";
 
+import { BackendResponse, User } from "../index.d";
 import { GetUserResponse } from "@/interfaces/BackendResponses";
 
-import { ROUTES } from "./constants";
+import { HttpError } from "@/errors/HttpError";
+import { HttpStatusError } from "@/errors/HttpStatusError";
 
 export async function login(
   email: string,
@@ -18,15 +20,15 @@ export async function login(
       credentials: "include",
     });
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: BackendResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to login: ${error}`);
+    throw error;
   }
 }
 
@@ -37,15 +39,15 @@ export async function logout(): Promise<BackendResponse> {
       credentials: "include",
     });
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to logout: ${error}`);
+    throw error;
   }
 }
 
@@ -56,15 +58,15 @@ export async function getUser(): Promise<GetUserResponse> {
       credentials: "include",
     });
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to logout: ${error}`);
+    throw error;
   }
 }
 
@@ -78,15 +80,15 @@ export async function postUser(user: User): Promise<BackendResponse> {
       body: JSON.stringify(user),
     });
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to logout: ${error}`);
+    throw error;
   }
 }
 

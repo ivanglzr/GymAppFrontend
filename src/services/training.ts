@@ -1,11 +1,13 @@
-import { BackendResponse, Training } from "../index.d";
+import { ROUTES } from "./constants";
 
+import { BackendResponse, Training } from "../index.d";
 import {
   GetTrainingResponse,
   GetTrainingsResponse,
 } from "@/interfaces/BackendResponses";
 
-import { ROUTES } from "./constants";
+import { HttpError } from "@/errors/HttpError";
+import { HttpStatusError } from "@/errors/HttpStatusError";
 
 export async function getTraining(
   trainingId: string
@@ -16,15 +18,15 @@ export async function getTraining(
       credentials: "include",
     });
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: GetTrainingResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to get training: ${error}`);
+    throw error;
   }
 }
 
@@ -35,15 +37,15 @@ export async function getTrainings(): Promise<GetTrainingsResponse> {
       credentials: "include",
     });
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: GetTrainingsResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to get trainings: ${error}`);
+    throw error;
   }
 }
 
@@ -60,15 +62,15 @@ export async function postTraining(
       body: JSON.stringify(training),
     });
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: BackendResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to post training: ${error}`);
+    throw error;
   }
 }
 
@@ -86,15 +88,15 @@ export async function putTraining(
       body: JSON.stringify(training),
     });
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: BackendResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to post training: ${error}`);
+    throw error;
   }
 }
 
@@ -110,14 +112,14 @@ export async function deleteTraining(
       }
     );
 
-    if (!petition.ok) throw new Error(`HTTP Error! Status: ${petition.status}`);
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 
     const res: BackendResponse = await petition.json();
 
-    if (res.status === "error") throw new Error(res.message);
+    if (res.status === "error") throw new HttpStatusError(res.message);
 
     return res;
   } catch (error) {
-    throw new Error(`Failed to delete training: ${error}`);
+    throw error;
   }
 }
