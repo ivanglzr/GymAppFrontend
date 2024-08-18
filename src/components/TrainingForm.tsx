@@ -65,7 +65,7 @@ function ExerciseForm({
         type="text"
         name={`exercise-${exerciseIndex + 1}-${exerciseKey}`}
         id={`exercise-${exerciseIndex + 1}-${exerciseKey}`}
-        onChange={event =>
+        onChange={(event) =>
           setExerciseName(exerciseIndex, event.currentTarget.value)
         }
         value={exercise.name}
@@ -103,7 +103,7 @@ function ExerciseForm({
                   id={`set-${exerciseIndex + 1}-${
                     setIndex + 1
                   }-${setKey}-weight`}
-                  onChange={event =>
+                  onChange={(event) =>
                     setSetWeight(
                       exerciseIndex,
                       setIndex,
@@ -127,7 +127,7 @@ function ExerciseForm({
                     setIndex + 1
                   }-${setKey}-reps`}
                   id={`set-${exerciseIndex + 1}-${setIndex + 1}-${setKey}-reps`}
-                  onChange={event =>
+                  onChange={(event) =>
                     setSetReps(
                       exerciseIndex,
                       setIndex,
@@ -236,10 +236,6 @@ export default function TrainingForm({
           ? await putTraining(trainingId, training)
           : await postTraining(training);
 
-        if (res.status === "error") {
-          throw new Error(res.message);
-        }
-
         alert(res.message);
 
         router.push("/user");
@@ -276,7 +272,7 @@ export default function TrainingForm({
           type="number"
           name="duration"
           id="duration"
-          onChange={event => setDuration(event.currentTarget.valueAsNumber)}
+          onChange={(event) => setDuration(event.currentTarget.valueAsNumber)}
           value={training.duration}
         />
       </div>
@@ -286,7 +282,7 @@ export default function TrainingForm({
           type="date"
           id="date"
           name="date"
-          onChange={event => setDate(new Date(event.currentTarget.value))}
+          onChange={(event) => setDate(new Date(event.currentTarget.value))}
           value={parsedDate}
         />
       </div>

@@ -43,11 +43,9 @@ export default function ExerciseForm({
 
         const imageRes = await uploadImage(id, imageFormData);
 
-        if (imageRes.status === "error") throw new Error(imageRes.message);
-
         return imageRes;
       } catch (error) {
-        throw new Error(error as string);
+        throw error;
       }
     },
     [image]
@@ -89,11 +87,8 @@ export default function ExerciseForm({
 
         if (isEditExercise) {
           const res = await putExercise(exerciseId, exerciseData);
-          if (res.status === "error") throw new Error(res.message);
         } else {
           const res = await postExercise(exerciseData);
-          if (res.status === "error") throw new Error(res.message);
-
           id = res.id;
         }
 
