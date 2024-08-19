@@ -30,6 +30,8 @@ select:focus {
   color: var(--font-color);
 
   border: none;
+
+  cursor: pointer;
 }
 
 label {
