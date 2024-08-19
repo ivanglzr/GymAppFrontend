@@ -11,10 +11,9 @@ import { useRouter } from "next/navigation";
 import { postTraining, putTraining } from "@/services/training";
 
 import { validateTrainingForm } from "@/utils/validateForm";
+import { generateRandomKey } from "@/utils/generateRandomKey";
 
 import { useTrainingReducer } from "@/hooks/useTrainingReducer";
-
-const generateUniqueKey = () => crypto.randomUUID();
 
 const getParsedDate = (date: Date): string => {
   const year = date.getFullYear();
@@ -200,7 +199,7 @@ export default function TrainingForm({
 
   const getExerciseKey = (exerciseIndex: number) => {
     if (!exerciseKeysRef.current[exerciseIndex]) {
-      exerciseKeysRef.current[exerciseIndex] = generateUniqueKey();
+      exerciseKeysRef.current[exerciseIndex] = generateRandomKey();
     }
     return exerciseKeysRef.current[exerciseIndex];
   };
@@ -214,7 +213,7 @@ export default function TrainingForm({
     }
 
     if (!exerciseSets[setIndex]) {
-      exerciseSets[setIndex] = generateUniqueKey();
+      exerciseSets[setIndex] = generateRandomKey();
     }
 
     return exerciseSets[setIndex];
