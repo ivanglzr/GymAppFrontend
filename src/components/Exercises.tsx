@@ -8,7 +8,7 @@ import { useExercises } from "@/hooks/useExercises";
 import { useCallback } from "react";
 
 export default function Exercises() {
-  const { exercises, error, loading } = useExercises();
+  const { exercises, searchExercises, error, loading } = useExercises();
 
   const exercisesHTML = useCallback(
     () =>
@@ -36,7 +36,17 @@ export default function Exercises() {
 
   return (
     <main className="exercises-container">
-      <h1>Exercises</h1>
+      <header className="exercises-container-header">
+        <h1 className="header-title">Exercises</h1>
+        <input
+          type="text"
+          name="search"
+          id="search"
+          placeholder="Search Exercise..."
+          className="search-input"
+          onChange={(event) => searchExercises(event.currentTarget.value)}
+        />
+      </header>
       {exercises?.length === 0 ? (
         <h2>User doesn&apos;t have any exercises</h2>
       ) : (

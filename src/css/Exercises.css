@@ -4,8 +4,32 @@
 
   padding: 10px var(--gap);
 
-  & h1 {
-    font-size: 40px;
+  & .exercises-container-header {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & .header-title {
+      font-size: 40px;
+    }
+
+    & .search-input {
+      width: 300px;
+      height: 40px;
+
+      padding: 7px 14px;
+
+      border-radius: var(--border-radius);
+      border: var(--input-border);
+
+      font-size: 20px;
+
+      &:focus {
+        outline: none;
+      }
+    }
   }
 
   & .exercise-article {
