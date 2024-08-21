@@ -5,7 +5,10 @@ import { GetUserExercisesResponse } from "@/interfaces/BackendResponses";
 
 import { useEffect, useState } from "react";
 
-import { getUserExercises } from "@/services/exercise";
+import {
+  getUserExercises,
+  getUserExercisesBySearch,
+} from "@/services/exercise";
 
 export function useExercises() {
   const [exercises, setExercises] = useState<Array<UserExercise>>();
@@ -20,5 +23,15 @@ export function useExercises() {
       .catch((_) => setError(true));
   }, []);
 
-  return { exercises, setExercises, error, loading };
+  const searchExercises = async (search: string) => {
+    try {
+      const res = await getUserExercisesBySearch(search);
+
+      setExercises(res.exercises);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  return { exercises, setExercises, searchExercises, error, loading };
 }
