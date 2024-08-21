@@ -29,6 +29,30 @@ export async function getUserExercises(): Promise<GetUserExercisesResponse> {
   }
 }
 
+export async function getUserExercisesBySearch(
+  search: string
+): Promise<GetUserExercisesResponse> {
+  try {
+    const petition = await fetch(
+      ROUTES.URI + ROUTES.GET_USER_EXERCISE_BY_SEARCH(search),
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+
+    const res: GetUserExercisesResponse = await petition.json();
+
+    if (res.status === "error") throw new HttpStatusError(res.message);
+
+    return res;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function getExerciseById(
   exerciseId: string
 ): Promise<GetExerciseByIdResponse> {
