@@ -8,7 +8,7 @@ import {
 } from "@/interfaces/BackendResponses";
 
 import { HttpStatusError } from "@/errors/HttpStatusError";
-import { validatePetition } from "./httpUtils";
+import { validatePetition, handleErrors } from "./httpUtils";
 
 export async function getUserExercises(): Promise<GetUserExercisesResponse> {
   try {
@@ -25,7 +25,7 @@ export async function getUserExercises(): Promise<GetUserExercisesResponse> {
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -49,7 +49,7 @@ export async function getUserExercisesBySearch(
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -73,7 +73,7 @@ export async function getExerciseById(
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -98,7 +98,7 @@ export async function postExercise(
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -124,7 +124,7 @@ export async function putExercise(
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -147,7 +147,7 @@ export async function uploadImage(
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -171,6 +171,6 @@ export async function deleteExercise(
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }

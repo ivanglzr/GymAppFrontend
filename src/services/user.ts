@@ -4,8 +4,7 @@ import { BackendResponse, User } from "../index.d";
 import { GetUserResponse } from "@/interfaces/BackendResponses";
 
 import { HttpStatusError } from "@/errors/HttpStatusError";
-import { validatePetition } from "./httpUtils";
-import { ForbiddenError } from "@/errors/ForbiddenError";
+import { validatePetition, handleErrors } from "./httpUtils";
 
 export async function login(
   email: string,
@@ -29,7 +28,7 @@ export async function login(
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -48,7 +47,7 @@ export async function logout(): Promise<BackendResponse> {
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -67,7 +66,7 @@ export async function getUser(): Promise<GetUserResponse> {
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -89,7 +88,7 @@ export async function postUser(user: User): Promise<BackendResponse> {
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 

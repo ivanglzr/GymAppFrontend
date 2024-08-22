@@ -7,7 +7,7 @@ import {
 } from "@/interfaces/BackendResponses";
 
 import { HttpStatusError } from "@/errors/HttpStatusError";
-import { validatePetition } from "./httpUtils";
+import { validatePetition, handleErrors } from "./httpUtils";
 
 export async function getTraining(
   trainingId: string
@@ -26,7 +26,7 @@ export async function getTraining(
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -45,7 +45,7 @@ export async function getTrainings(): Promise<GetTrainingsResponse> {
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -70,7 +70,7 @@ export async function postTraining(
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -96,7 +96,7 @@ export async function putTraining(
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
 
@@ -120,6 +120,6 @@ export async function deleteTraining(
 
     return res;
   } catch (error) {
-    throw error;
+    throw handleErrors(error);
   }
 }
