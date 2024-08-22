@@ -10,12 +10,13 @@ export function validatePetition(petition: Response) {
   if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 }
 
-export function handleErrors(error: Error) {
+export function handleErrors(error: unknown) {
   if (error instanceof ForbiddenError) {
     window.location.href = "/forbidden";
+    throw error;
   } else if (error instanceof UnauthorizedError) {
     window.location.href = "/login";
-  } else {
     throw error;
   }
+  throw error;
 }
