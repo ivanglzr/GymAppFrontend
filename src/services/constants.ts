@@ -7,7 +7,8 @@ export const ROUTES = {
   GET_TRAININGS: "/user/training/",
   GET_EXERCISE_BY_ID: (exerciseId: string) => `/exercise/${exerciseId}`,
   GET_USER_EXERCISES: "/exercise/",
-  GET_USER_EXERCISE_BY_SEARCH: (search: string) => `/exercise/search/${search}`,
+  GET_USER_EXERCISE_BY_SEARCH: (search: string) =>
+    `/exercise/search/?search=${search}`,
   GET_IMAGE: (imageName: string) => `/exercise/image/${imageName}`,
   POST_USER: "/user/",
   POST_TRAINING: "/user/training/",
