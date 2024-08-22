@@ -4,7 +4,8 @@ import { BackendResponse, User } from "../index.d";
 import { GetUserResponse } from "@/interfaces/BackendResponses";
 
 import { HttpStatusError } from "@/errors/HttpStatusError";
-import { validatePetition } from "./middlewares";
+import { validatePetition } from "./httpUtils";
+import { ForbiddenError } from "@/errors/ForbiddenError";
 
 export async function login(
   email: string,

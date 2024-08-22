@@ -8,7 +8,7 @@ import {
 } from "@/interfaces/BackendResponses";
 
 import { HttpStatusError } from "@/errors/HttpStatusError";
-import { validatePetition } from "./middlewares";
+import { validatePetition } from "./httpUtils";
 
 export async function getUserExercises(): Promise<GetUserExercisesResponse> {
   try {
