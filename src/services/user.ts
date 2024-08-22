@@ -3,8 +3,8 @@ import { ROUTES } from "./constants";
 import { BackendResponse, User } from "../index.d";
 import { GetUserResponse } from "@/interfaces/BackendResponses";
 
-import { HttpError } from "@/errors/HttpError";
 import { HttpStatusError } from "@/errors/HttpStatusError";
+import { validatePetition } from "./middlewares";
 
 export async function login(
   email: string,
@@ -20,7 +20,7 @@ export async function login(
       credentials: "include",
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: BackendResponse = await petition.json();
 
@@ -39,7 +39,7 @@ export async function logout(): Promise<BackendResponse> {
       credentials: "include",
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res = await petition.json();
 
@@ -58,7 +58,7 @@ export async function getUser(): Promise<GetUserResponse> {
       credentials: "include",
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res = await petition.json();
 
@@ -80,7 +80,7 @@ export async function postUser(user: User): Promise<BackendResponse> {
       body: JSON.stringify(user),
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res = await petition.json();
 

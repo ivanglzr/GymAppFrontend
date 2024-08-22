@@ -7,8 +7,8 @@ import {
   PostExerciseResponse,
 } from "@/interfaces/BackendResponses";
 
-import { HttpError } from "@/errors/HttpError";
 import { HttpStatusError } from "@/errors/HttpStatusError";
+import { validatePetition } from "./middlewares";
 
 export async function getUserExercises(): Promise<GetUserExercisesResponse> {
   try {
@@ -17,7 +17,7 @@ export async function getUserExercises(): Promise<GetUserExercisesResponse> {
       credentials: "include",
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: GetUserExercisesResponse = await petition.json();
 
@@ -41,7 +41,7 @@ export async function getUserExercisesBySearch(
       }
     );
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: GetUserExercisesResponse = await petition.json();
 
@@ -65,7 +65,7 @@ export async function getExerciseById(
       }
     );
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: GetExerciseByIdResponse = await petition.json();
 
@@ -90,7 +90,7 @@ export async function postExercise(
       body: JSON.stringify(exercise),
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: PostExerciseResponse = await petition.json();
 
@@ -116,7 +116,7 @@ export async function putExercise(
       body: JSON.stringify(exercise),
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: BackendResponse = await petition.json();
 
@@ -139,7 +139,7 @@ export async function uploadImage(
       body: imageFormData,
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: BackendResponse = await petition.json();
 
@@ -163,7 +163,7 @@ export async function deleteExercise(
       }
     );
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: BackendResponse = await petition.json();
 

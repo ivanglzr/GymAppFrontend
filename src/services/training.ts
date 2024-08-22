@@ -6,8 +6,8 @@ import {
   GetTrainingsResponse,
 } from "@/interfaces/BackendResponses";
 
-import { HttpError } from "@/errors/HttpError";
 import { HttpStatusError } from "@/errors/HttpStatusError";
+import { validatePetition } from "./middlewares";
 
 export async function getTraining(
   trainingId: string
@@ -18,7 +18,7 @@ export async function getTraining(
       credentials: "include",
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: GetTrainingResponse = await petition.json();
 
@@ -37,7 +37,7 @@ export async function getTrainings(): Promise<GetTrainingsResponse> {
       credentials: "include",
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: GetTrainingsResponse = await petition.json();
 
@@ -62,7 +62,7 @@ export async function postTraining(
       body: JSON.stringify(training),
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: BackendResponse = await petition.json();
 
@@ -88,7 +88,7 @@ export async function putTraining(
       body: JSON.stringify(training),
     });
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: BackendResponse = await petition.json();
 
@@ -112,7 +112,7 @@ export async function deleteTraining(
       }
     );
 
-    if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
+    validatePetition(petition);
 
     const res: BackendResponse = await petition.json();
 
