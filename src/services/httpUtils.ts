@@ -9,3 +9,13 @@ export function validatePetition(petition: Response) {
     throw new UnauthorizedError("You cannoy access this resource");
   if (!petition.ok) throw new HttpError(`status: ${petition.status}`);
 }
+
+export function handleErrors(error: Error) {
+  if (error instanceof ForbiddenError) {
+    window.location.href = "/forbidden";
+  } else if (error instanceof UnauthorizedError) {
+    window.location.href = "/login";
+  } else {
+    throw error;
+  }
+}
