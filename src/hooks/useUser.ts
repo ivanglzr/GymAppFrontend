@@ -4,10 +4,7 @@ import { useEffect, useState } from "react";
 
 import { getUser } from "@/services/user";
 
-import { User } from "../index.d";
-import { GetUserResponse } from "@/interfaces/BackendResponses";
-
-type UserResponse = Omit<User, "_id" | "email" | "password" | "trainings">;
+import { GetUserResponse, UserResponse } from "@/interfaces/BackendResponses";
 
 export function useUser() {
   const [user, setUser] = useState<UserResponse>();

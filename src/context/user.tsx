@@ -6,10 +6,9 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import { User } from "../index.d";
 import { getUser } from "@/services/user";
 
-type UserResponse = Omit<User, "_id" | "email" | "password" | "trainings">;
+import { UserResponse } from "@/interfaces/BackendResponses";
 
 type UserContextType = {
   user: UserResponse | undefined;
