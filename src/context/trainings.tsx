@@ -1,15 +1,24 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { Training } from "../index.d";
 import { getTrainings } from "@/services/training";
 
 type TrainingsContextType = {
   trainings: Array<Training> | undefined;
+  setTrainings: Dispatch<SetStateAction<Training[] | undefined>> | undefined;
   error: boolean;
   loading: boolean;
 };
 
 export const TrainingsContext = createContext<TrainingsContextType>({
   trainings: undefined,
+  setTrainings: undefined,
   error: false,
   loading: true,
 });
@@ -26,7 +35,9 @@ export function TrainingsProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <TrainingsContext.Provider value={{ trainings, error, loading }}>
+    <TrainingsContext.Provider
+      value={{ trainings, setTrainings, error, loading }}
+    >
       {children}
     </TrainingsContext.Provider>
   );

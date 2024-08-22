@@ -6,9 +6,12 @@ export function useTrainingsContext() {
 
   if (!context) throw new Error("Element isn't in the provider");
 
+  const { trainings, setTrainings, error, loading } = context;
+
   return {
-    trainings: context.trainings,
-    error: context.error,
-    loading: context.loading,
+    trainings,
+    setTrainings,
+    error,
+    loading,
   };
 }

@@ -1,4 +1,11 @@
-import { createContext, useEffect, useState, ReactNode } from "react";
+import {
+  createContext,
+  useEffect,
+  useState,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { User } from "../index.d";
 import { getUser } from "@/services/user";
 
@@ -6,12 +13,14 @@ type UserResponse = Omit<User, "_id" | "email" | "password" | "trainings">;
 
 type UserContextType = {
   user: UserResponse | undefined;
+  setUser: Dispatch<SetStateAction<UserResponse | undefined>> | undefined;
   error: boolean;
   loading: boolean;
 };
 
 export const UserContext = createContext<UserContextType>({
   user: undefined,
+  setUser: undefined,
   error: false,
   loading: true,
 });
@@ -28,7 +37,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, error, loading }}>
+    <UserContext.Provider value={{ user, setUser, error, loading }}>
       {children}
     </UserContext.Provider>
   );
