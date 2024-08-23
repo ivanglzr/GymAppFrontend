@@ -1,38 +1,23 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, SetStateAction } from "react";
 import { Training } from "../index.d";
-import { getTrainings } from "@/services/training";
+import { useTrainings } from "@/hooks/useTrainings";
 
 type TrainingsContextType = {
   trainings: Array<Training> | undefined;
-  setTrainings: Dispatch<SetStateAction<Training[] | undefined>> | undefined;
+  setTrainings: (value: SetStateAction<Training[] | undefined>) => void;
   error: boolean;
   loading: boolean;
 };
 
 export const TrainingsContext = createContext<TrainingsContextType>({
   trainings: undefined,
-  setTrainings: undefined,
+  setTrainings: () => {},
   error: false,
   loading: true,
 });
 
 export function TrainingsProvider({ children }: { children: ReactNode }) {
-  const [trainings, setTrainings] = useState<Array<Training>>();
-  const [error, setError] = useState<boolean>(false);
-  const loading = !trainings && !error;
-
-  useEffect(() => {
-    getTrainings()
-      .then((res) => setTrainings(res.trainings))
-      .catch((_) => setError(true));
-  }, []);
+  const { trainings, setTrainings, error, loading } = useTrainings();
 
   return (
     <TrainingsContext.Provider

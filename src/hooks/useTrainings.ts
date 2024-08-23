@@ -8,8 +8,8 @@ import { getTrainings } from "@/services/training";
 import { useEffect, useState } from "react";
 
 export function useTrainings() {
-  const [trainings, setTrainings] = useState<Array<Training>>([]);
-  const [error, setError] = useState<boolean>();
+  const [trainings, setTrainings] = useState<Array<Training>>();
+  const [error, setError] = useState<boolean>(false);
   const loading = !trainings && !error;
 
   useEffect(() => {

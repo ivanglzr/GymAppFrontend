@@ -1,14 +1,7 @@
-import {
-  createContext,
-  useEffect,
-  useState,
-  ReactNode,
-  Dispatch,
-  SetStateAction,
-} from "react";
-import { getUser } from "@/services/user";
+import { createContext, ReactNode, Dispatch, SetStateAction } from "react";
 
 import { UserResponse } from "@/interfaces/BackendResponses";
+import { useUser } from "@/hooks/useUser";
 
 type UserContextType = {
   user: UserResponse | undefined;
@@ -25,15 +18,7 @@ export const UserContext = createContext<UserContextType>({
 });
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<UserResponse | undefined>(undefined);
-  const [error, setError] = useState<boolean>(false);
-  const loading = !user && !error;
-
-  useEffect(() => {
-    getUser()
-      .then((res) => setUser(res.user))
-      .catch(() => setError(true));
-  }, []);
+  const { user, setUser, error, loading } = useUser();
 
   return (
     <UserContext.Provider value={{ user, setUser, error, loading }}>
