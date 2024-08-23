@@ -1,19 +1,45 @@
 import "@/css/UserAside.css";
 
+import { TrainingsContext } from "@/context/trainings";
+import { UserContext } from "@/context/user";
+
+import { useContext, useMemo } from "react";
+
 import Link from "next/link";
 
-export default function UserAside({
-  name,
-  numberOfTrainings,
-  totalTrainingsDuration,
-}: {
-  name: string;
-  numberOfTrainings: number;
-  totalTrainingsDuration: number;
-}) {
+import { Training } from "../index.d";
+
+export default function UserAside() {
+  const {
+    user,
+    error: userError,
+    loading: userLoading,
+  } = useContext(UserContext);
+  const {
+    trainings,
+    error: trainingsError,
+    loading: trainingsLoading,
+  } = useContext(TrainingsContext);
+
+  const userName = useMemo(() => user?.name, [user]);
+
+  const numberOfTrainings = useMemo(() => trainings?.length, [trainings]);
+  const totalTrainingsDuration =
+    useMemo(
+      () =>
+        trainings?.reduce((totalDuration: number, training: Training) => {
+          return totalDuration + training.duration;
+        }, 0),
+      [trainings]
+    ) ?? 0;
+
+  if (userError || trainingsError)
+    return <h2>An error occurred while fetching the data</h2>;
+  if (userLoading || trainingsLoading) return <h2>Loading...</h2>;
+
   return (
     <aside id="user-aside">
-      <h2>{name}</h2>
+      <h2>{userName}</h2>
       <div className="training-info-div">
         <h3 className="training-info-title subtitle">Trainings</h3>
         <span className="training-info-span">{numberOfTrainings}</span>
