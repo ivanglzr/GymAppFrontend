@@ -1,5 +1,5 @@
 export const ROUTES = {
-  URI: "http://localhost:3900",
+  URI: process.env.BACKEND_URL ?? "http://localhost:3900",
   LOGIN: "/login/",
   LOGOUT: "/logout/",
   GET_USER: "/user/",
