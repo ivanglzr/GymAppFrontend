@@ -1,3 +1,5 @@
+"use client";
+
 import "@/css/UserAside.css";
 
 import { TrainingsContext } from "@/context/trainings";

@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, ReactNode, SetStateAction } from "react";
 import { Training } from "../index.d";
 import { useTrainings } from "@/hooks/useTrainings";

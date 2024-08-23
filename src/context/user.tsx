@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, ReactNode, Dispatch, SetStateAction } from "react";
 
 import { UserResponse } from "@/interfaces/BackendResponses";

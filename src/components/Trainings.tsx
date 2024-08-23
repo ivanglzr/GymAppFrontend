@@ -1,3 +1,5 @@
+"use client";
+
 import "@/css/Trainings.css";
 
 import { Training as TrainingInterface } from "../index.d";
