@@ -2,8 +2,6 @@ import Container from "@/components/Container";
 import Aside from "@/components/Aside";
 import Trainings from "@/components/Trainings";
 import UserAside from "@/components/UserAside";
-import { UserProvider } from "@/context/user";
-import { TrainingsProvider } from "@/context/trainings";
 
 export default function UserPage() {
   return (
@@ -12,13 +10,9 @@ export default function UserPage() {
         position: "relative",
       }}
     >
-      <UserProvider>
-        <TrainingsProvider>
-          <Aside />
-          <UserAside />
-          <Trainings />
-        </TrainingsProvider>
-      </UserProvider>
+      <Aside />
+      <UserAside />
+      <Trainings />
     </Container>
   );
 }

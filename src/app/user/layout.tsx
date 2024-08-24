@@ -1,3 +1,6 @@
+import { UserProvider } from "@/context/user";
+import { TrainingsProvider } from "@/context/trainings";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -5,7 +8,9 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      {children}
+      <UserProvider>
+        <TrainingsProvider>{children}</TrainingsProvider>
+      </UserProvider>
       <script
         src="https://kit.fontawesome.com/f6c6e8c516.js"
         crossOrigin="anonymous"
