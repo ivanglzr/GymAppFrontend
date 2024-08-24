@@ -1,29 +1,13 @@
 "use client";
 
-import { Training } from "../index.d";
-
-import { GetTrainingResponse } from "@/interfaces/BackendResponses";
-
-import { getTraining } from "@/services/training";
-
-import { useEffect, useState } from "react";
+import { useTrainingsContext } from "./useTrainingsContext";
 
 export function useTraining(trainingId: string) {
-  const [training, setTraining] = useState<Training>();
-  const [error, setError] = useState<boolean>(false);
-  const loading = !training && !error;
-
-  useEffect(() => {
-    getTraining(trainingId)
-      .then((res: GetTrainingResponse) => {
-        setTraining(res.training);
-      })
-      .catch((_) => setError(true));
-  }, [trainingId]);
+  const { trainings, error, loading } = useTrainingsContext();
+  const training = trainings?.find((e) => e._id?.toString() === trainingId);
 
   return {
     training,
-    setTraining,
     error,
     loading,
   };

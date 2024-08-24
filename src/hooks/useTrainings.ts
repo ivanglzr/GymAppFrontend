@@ -1,31 +1,9 @@
 "use client";
 
-import { Training } from "../index.d";
-import { GetTrainingsResponse } from "@/interfaces/BackendResponses";
-
-import { getTrainings } from "@/services/training";
-
-import { useEffect, useState } from "react";
+import { useTrainingsContext } from "./useTrainingsContext";
 
 export function useTrainings() {
-  const [trainings, setTrainings] = useState<Array<Training>>();
-  const [error, setError] = useState<boolean>(false);
-  const loading = !trainings && !error;
-
-  useEffect(() => {
-    getTrainings()
-      .then((res: GetTrainingsResponse) => {
-        const trainingsParsed = res.trainings.map((training) => {
-          return {
-            ...training,
-            date: new Date(training.date),
-          };
-        });
-
-        setTrainings(trainingsParsed);
-      })
-      .catch((_) => setError(true));
-  }, []);
+  const { trainings, setTrainings, error, loading } = useTrainingsContext();
 
   return {
     trainings,

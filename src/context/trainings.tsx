@@ -1,8 +1,14 @@
 "use client";
 
-import { createContext, ReactNode, SetStateAction } from "react";
+import {
+  createContext,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { Training } from "../index.d";
-import { useTrainings } from "@/hooks/useTrainings";
+import { getTrainings } from "@/services/training";
 
 type TrainingsContextType = {
   trainings: Array<Training> | undefined;
@@ -19,7 +25,15 @@ export const TrainingsContext = createContext<TrainingsContextType>({
 });
 
 export function TrainingsProvider({ children }: { children: ReactNode }) {
-  const { trainings, setTrainings, error, loading } = useTrainings();
+  const [trainings, setTrainings] = useState<Training[]>();
+  const [error, setError] = useState<boolean>(false);
+  const loading = !trainings && !error;
+
+  useEffect(() => {
+    getTrainings()
+      .then((res) => setTrainings(res.trainings))
+      .catch((_) => setError(true));
+  }, []);
 
   return (
     <TrainingsContext.Provider
