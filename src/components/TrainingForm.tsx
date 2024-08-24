@@ -121,7 +121,7 @@ export default function TrainingForm({
         alert(err);
       }
     },
-    [isEditTraining, trainingId, training, router]
+    [isEditTraining, trainingId, training, router, refetchTrainings]
   );
 
   const handleDeleteExercise = useCallback(

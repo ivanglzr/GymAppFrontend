@@ -34,7 +34,7 @@ export default function Trainings() {
         alert(error);
       }
     },
-    [deleteTraining, setTrainings]
+    [setTrainings]
   );
 
   const trainingsHTML = useCallback(() => {
@@ -52,7 +52,7 @@ export default function Trainings() {
         />
       );
     });
-  }, [trainings, setTrainings]);
+  }, [trainings, setTrainings, handleDelete]);
 
   if (error)
     return (
@@ -75,7 +75,7 @@ export default function Trainings() {
         {trainings?.length !== 0 ? (
           trainingsHTML()
         ) : (
-          <h2>You don't have any trainings</h2>
+          <h2>You don&apos;t have any trainings</h2>
         )}
       </section>
     </main>

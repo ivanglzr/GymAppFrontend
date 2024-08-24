@@ -28,7 +28,7 @@ export default function Exercises() {
           />
         );
       }),
-    [exercises, setExercises]
+    [exercises, setExercises, handleDelete]
   );
 
   if (error) {
