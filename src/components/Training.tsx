@@ -1,26 +1,28 @@
 "use client";
 
-import { Exercise } from "../index.d";
+import { Training as TrainingInterface } from "../index.d";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Training({
-  id,
-  date,
-  duration,
-  exercises,
-  sets,
+  training: { date, duration, exercises, _id: id },
   handleDelete,
 }: {
-  id: string;
-  date: string;
-  duration: number;
-  exercises: Array<Exercise>;
-  sets: number;
-  handleDelete: () => Promise<void>;
+  training: TrainingInterface;
+  handleDelete: (id: string) => Promise<void>;
 }) {
   const router = useRouter();
+
+  const parsedDate = date.toLocaleDateString("es-ES", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
+  const numberOfSets = exercises.reduce((totalSets, exercise) => {
+    return totalSets + exercise.sets.length;
+  }, 0);
 
   return (
     <article className="training-div">
@@ -28,7 +30,7 @@ export default function Training({
         <h2 className="training-title">
           <Link href={`/user/training/${id}`}>Training</Link>
         </h2>
-        <span className="training-date subtitle">{date}</span>
+        <span className="training-date subtitle">{parsedDate}</span>
         <div className="training-icons-div">
           <button
             className="btn-icon"
@@ -39,7 +41,7 @@ export default function Training({
           </button>
           <button
             className="btn-icon"
-            onClick={handleDelete}
+            onClick={() => handleDelete(`${id}`)}
             aria-label="Delete training button"
           >
             <i className="fa-solid fa-trash fa-xl"></i>
@@ -53,13 +55,13 @@ export default function Training({
         </div>
         <div className="sets-div">
           <h3 className="sets-div-title subtitle">Sets</h3>
-          <span className="sets-div-info">{sets.toString()}</span>
+          <span className="sets-div-info">{numberOfSets.toString()}</span>
         </div>
       </div>
       <div className="exercises-div">
         <h3 className="exercises-title subtitle">Workout</h3>
         <ul className="exercises-list">
-          {exercises.map(exercise => (
+          {exercises.map((exercise) => (
             <li className="exercise-name" key={exercise._id}>
               {`${exercise.sets.length} ${
                 exercise.sets.length === 1 ? "set" : "sets"
