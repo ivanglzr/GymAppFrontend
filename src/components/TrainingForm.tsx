@@ -16,6 +16,7 @@ import { validateTrainingForm } from "@/utils/validateForm";
 import { generateRandomKey } from "@/utils/generateRandomKey";
 
 import { useTrainingReducer } from "@/hooks/useTrainingReducer";
+import { useTrainingsContext } from "@/hooks/useTrainingsContext";
 
 const getParsedDate = (date: Date): string => {
   const year = date.getFullYear();
@@ -60,6 +61,8 @@ export default function TrainingForm({
     deleteExercise,
     deleteSet,
   } = useTrainingReducer(initialTraining);
+
+  const { refetchTrainings } = useTrainingsContext();
 
   const router = useRouter();
 
@@ -111,6 +114,8 @@ export default function TrainingForm({
 
         alert(res.message);
 
+        refetchTrainings();
+
         router.push("/user");
       } catch (err) {
         alert(err);
@@ -131,6 +136,9 @@ export default function TrainingForm({
   const handleDeleteSet = useCallback(
     (exerciseIndex: number, setIndex: number) => {
       deleteSet(exerciseIndex, setIndex);
+
+      if (!setKeysRef.current[exerciseIndex]) return;
+
       setKeysRef.current[exerciseIndex].splice(setIndex, 1);
     },
     [deleteSet]
