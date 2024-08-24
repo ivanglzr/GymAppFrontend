@@ -1,5 +1,5 @@
 export const ROUTES = {
-  URI: process.env.BACKEND_URL ?? "http://localhost:3900",
+  URI: process.env.BACKEND_URL ?? "https://gymappbackend-tb11.onrender.com",
   LOGIN: "/login/",
   LOGOUT: "/logout/",
   GET_USER: "/user/",
