@@ -39,7 +39,12 @@ export default function Trainings() {
 
   const trainingsHTML = useCallback(() => {
     return trainings?.map((training) => {
-      return <Training training={training} handleDelete={handleDelete} />;
+      const parsedTraining: TrainingInterface = {
+        ...training,
+        date: new Date(training.date),
+      };
+
+      return <Training training={parsedTraining} handleDelete={handleDelete} />;
     });
   }, [trainings, setTrainings]);
 
