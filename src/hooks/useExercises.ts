@@ -5,7 +5,7 @@ import { GetUserExercisesResponse } from "@/interfaces/BackendResponses";
 
 import { useEffect, useRef, useState } from "react";
 
-import { getUserExercises } from "@/services/exercise";
+import { deleteExercise, getUserExercises } from "@/services/exercise";
 
 import debounce from "just-debounce-it";
 
@@ -46,5 +46,34 @@ export function useExercises() {
     setExercises(newExercises);
   }, 300);
 
-  return { exercises, setExercises, searchExercises, error, loading };
+  const handleDelete = async (id: string) => {
+    if (!exercises) return;
+
+    try {
+      const { message } = await deleteExercise(id);
+
+      setExercises((prevState) => {
+        if (!prevState) return [];
+
+        const newExercises = prevState.filter(
+          (exercise) => exercise._id?.toString() !== id
+        );
+
+        return newExercises;
+      });
+
+      alert(message);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  return {
+    exercises,
+    setExercises,
+    searchExercises,
+    handleDelete,
+    error,
+    loading,
+  };
 }

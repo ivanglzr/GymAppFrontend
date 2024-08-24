@@ -8,14 +8,27 @@ import { useExercises } from "@/hooks/useExercises";
 import { useCallback } from "react";
 
 export default function Exercises() {
-  const { exercises, searchExercises, error, loading } = useExercises();
+  const {
+    exercises,
+    setExercises,
+    searchExercises,
+    handleDelete,
+    error,
+    loading,
+  } = useExercises();
 
   const exercisesHTML = useCallback(
     () =>
-      exercises?.map((exercise: UserExercise) => (
-        <Exercise key={exercise._id} exercise={exercise} />
-      )),
-    [exercises]
+      exercises?.map((exercise: UserExercise) => {
+        return (
+          <Exercise
+            key={exercise._id}
+            exercise={exercise}
+            handleDelete={handleDelete}
+          />
+        );
+      }),
+    [exercises, setExercises]
   );
 
   if (error) {

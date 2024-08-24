@@ -3,7 +3,13 @@ import { UserExercise } from "../index.d";
 import { getImageURL } from "@/utils/getImageURL";
 import { useRouter } from "next/navigation";
 
-export default function Exercise({ exercise }: { exercise: UserExercise }) {
+export default function Exercise({
+  exercise,
+  handleDelete,
+}: {
+  exercise: UserExercise;
+  handleDelete: (id: string) => void;
+}) {
   const router = useRouter();
 
   const imageURL = getImageURL(exercise.image ?? "");
@@ -20,7 +26,7 @@ export default function Exercise({ exercise }: { exercise: UserExercise }) {
             >
               <i className="fa-solid fa-pen-to-square fa-xl"></i>
             </button>
-            <button>
+            <button onClick={() => handleDelete(`${exercise._id?.toString()}`)}>
               <i className="fa-solid fa-trash fa-xl"></i>
             </button>
           </div>
