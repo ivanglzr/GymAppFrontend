@@ -8,43 +8,38 @@ import { deleteTraining } from "@/services/training";
 
 import Training from "./Training";
 
-import { useCallback, useContext } from "react";
-import { TrainingsContext } from "@/context/trainings";
+import { useCallback } from "react";
+import { useTrainingsContext } from "@/hooks/useTrainingsContext";
 
 export default function Trainings() {
-  const { trainings, setTrainings, error, loading } =
-    useContext(TrainingsContext);
+  const { trainings, setTrainings, error, loading } = useTrainingsContext();
 
-  const handleDelete = useCallback(async (id: string) => {
-    try {
-      const { message } = await deleteTraining(id);
+  const handleDelete = useCallback(
+    async (id: string) => {
+      try {
+        const { message } = await deleteTraining(id);
 
-      setTrainings((prevState: TrainingInterface[] | undefined) => {
-        if (!prevState) {
-          return [];
-        }
+        setTrainings((prevState: TrainingInterface[] | undefined) => {
+          if (!prevState) {
+            return [];
+          }
 
-        const newState = prevState.filter((e) => e._id?.toString() !== id);
+          const newState = prevState.filter((e) => e._id?.toString() !== id);
 
-        return newState;
-      });
+          return newState;
+        });
 
-      alert(message);
-    } catch (error) {
-      alert(error);
-    }
-  }, [deleteTraining, setTrainings]);
+        alert(message);
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [deleteTraining, setTrainings]
+  );
 
   const trainingsHTML = useCallback(() => {
     return trainings?.map((training) => {
-      
-
-      return (
-        <Training
-          training={training}
-          handleDelete={handleDelete}
-        />
-      );
+      return <Training training={training} handleDelete={handleDelete} />;
     });
   }, [trainings, setTrainings]);
 

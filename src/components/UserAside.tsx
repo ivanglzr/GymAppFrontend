@@ -2,26 +2,21 @@
 
 import "@/css/UserAside.css";
 
-import { TrainingsContext } from "@/context/trainings";
-import { UserContext } from "@/context/user";
-
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 
 import Link from "next/link";
 
 import { Training } from "../index.d";
+import { useTrainingsContext } from "@/hooks/useTrainingsContext";
+import { useUserContext } from "@/hooks/useUserContext";
 
 export default function UserAside() {
-  const {
-    user,
-    error: userError,
-    loading: userLoading,
-  } = useContext(UserContext);
+  const { user, error: userError, loading: userLoading } = useUserContext();
   const {
     trainings,
     error: trainingsError,
     loading: trainingsLoading,
-  } = useContext(TrainingsContext);
+  } = useTrainingsContext();
 
   const userName = useMemo(() => user?.name, [user]);
 
