@@ -44,12 +44,29 @@ export default function Trainings() {
         date: new Date(training.date),
       };
 
-      return <Training training={parsedTraining} handleDelete={handleDelete} />;
+      return (
+        <Training
+          key={training._id}
+          training={parsedTraining}
+          handleDelete={handleDelete}
+        />
+      );
     });
   }, [trainings, setTrainings]);
 
-  if (error) return <h2>An error occurred</h2>;
-  if (loading) return <h2>Loading...</h2>;
+  if (error)
+    return (
+      <main className="trainings-container">
+        <h2>An error occurred</h2>
+      </main>
+    );
+
+  if (loading)
+    return (
+      <main className="trainings-container">
+        <h2>Loading...</h2>
+      </main>
+    );
 
   return (
     <main className="trainings-container">
