@@ -9,10 +9,10 @@ import { deleteTraining } from "@/services/training";
 import Training from "./Training";
 
 import { useCallback } from "react";
-import { useTrainingsContext } from "@/hooks/useTrainingsContext";
+import { useTrainings } from "@/hooks/useTrainings";
 
 export default function Trainings() {
-  const { trainings, setTrainings, error, loading } = useTrainingsContext();
+  const { trainings, setTrainings, error, loading } = useTrainings();
 
   const handleDelete = useCallback(
     async (id: string) => {
