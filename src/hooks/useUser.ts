@@ -1,23 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { getUser } from "@/services/user";
-
-import { GetUserResponse, UserResponse } from "@/interfaces/BackendResponses";
+import { useUserContext } from "./useUserContext";
 
 export function useUser() {
-  const [user, setUser] = useState<UserResponse>();
-  const [error, setError] = useState<boolean>(false);
-  const loading = !error && !user;
-
-  useEffect(() => {
-    getUser()
-      .then((res: GetUserResponse) => {
-        setUser(res.user);
-      })
-      .catch((_) => setError(true));
-  }, []);
+  const { user, setUser, error, loading } = useUserContext();
 
   return {
     user,
